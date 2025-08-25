@@ -4,21 +4,38 @@
         <title>
             Lopez Stone & Tile
         </title>
-        <link rel="icon" type="image/jpg" href =image.png
+        <link rel="icon" type="images/png" href =images/logo.png>
     </head>
     <body>
-        <h1>
-            Lopez Stone & Tile
-        </h1>
-        <hr>
+        <header>
+            <h1>Lopez Stone & Tile</h1>
+            <hr>
+        </header>    
+        
         <!-- this is a comment-->
         <p>
         <a href=""
         title="goes to tik tok">
             click me
         </a>
-        <img src="image.png" height="200">
-        <button>Instagram</button>
+        <img src="images/pfp.png" height="200">
+        <a href="https://www.instagram.com/">
+            <button style="border-radius: 25px;">Instagram</button>
+        </a>
+        <form action="" method="POST">
+            <label for="Name">Name </label><br>
+            <input type="text" id="Name" placeholder="first last" minlength="1" maxlength="20" required><br><br>
+
+            <label for="email">Email </label><br>
+            <input type="email" id="email" placeholder="example@gmail.com"><br><br>
+
+            <label for="phone"> Phone </label><br>
+            <input type="tel" id="phone" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]-{4}"><br><br>
+
+            <label for="info"> Comments </label><br>
+            <textarea id="info" rows="10" cols="30" placeholder="'questions/concerns/estimate information'"></textarea><br><br>
+            <input type="submit">
+        </form>
         <button>facebook</button>
         <button>email</button>
         <audio controls></audio>
