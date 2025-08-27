@@ -1,0 +1,28 @@
+.logo{
+    margin-left: 10px;
+    margin-top: -18px;
+}
+.sidebar{
+    width: 180px;
+    border: 2px none;
+    height: calc(100vh - 35px);
+    padding: 10px;
+    position: fixed;
+    background-color: rgb(0, 0, 0);
+
+}
+.content{
+
+}
+.hdr{
+    text-align: end;
+    margin-bottom: -5px;
+    font-size: 16px;
+    font-family: 'Segoe UI', 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: rgb(118, 118, 118);
+}
+.hdr:hover{
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    transform: scale(1.05);
+}
