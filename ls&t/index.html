@@ -8,10 +8,13 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <header>
-            <div class="sidebar">
-                <h1><img src="images/pfp.png" height="150" class="logo"></h1>
-                <hr>
+        <aside class="sidebar">
+            <div>
+                <h1>
+                    <a href="images/pfp.png">
+                        <img src="images/pfp.png" class="logo"></h1>
+                    </a>
+                <hr class="hdr">
                 <br>
                 <p class="hdr">flooring</p>
                 <p class="hdr">fencing</p>
@@ -22,23 +25,25 @@
                 <p class="hdr">mailbox</p>
                 
                 <br><br>
-                <hr>
+                <hr class="hdr">
                 <br>
                 <p class="hdr">about</p>
                 <p class="hdr">contact us</p>
-                <br><br><hr><br>
-                
+                <br><br><hr class="hdr"><br>
+                <!--<button>facebook</button>
+                <button>email</button>
+                </a>
+            
+                <a href="https://www.instagram.com/">
+                <button style="border-radius: 25px;">Instagram</button>
+                </a>-->
             </div>
-        </header>    
-        <main></main>
+        </aside>    
+        <main class="parent">
             <!-- this is a comment-->
-            <a href=""
-            title="goes to tik tok">
-                click me
-            </a>
-            <form action="" method="POST">
+            <form action="" method="POST" class="content">
                 <label for="Name">Name </label><br>
-                <input type="text" id="Name" placeholder="first last" minlength="1" maxlength="20" required><br><br>
+                <input type="text" id="name" placeholder="first last" minlength="1" maxlength="20" required><br><br>
 
                 <label for="email">Email </label><br>
                 <input type="email" id="email" placeholder="example@gmail.com" required><br><br>
@@ -54,13 +59,7 @@
             <br>
         </main>
         <footer>
-            <button>facebook</button>
-            <button>email</button>
-             </a>
-            
-            <a href="https://www.instagram.com/">
-                <button style="border-radius: 25px;">Instagram</button>
-            </a>
+           
         </footer>
     </body>
 </html>

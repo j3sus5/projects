@@ -1,28 +1,84 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    display: grid;
+    grid-template-columns: 1fr 9fr;
+}
+#name{
+    width: 350px;
+}
+#email{
+    width: 350px;
+}
+#phone{
+    width: 350px;
+}
+#info{
+    width: 350px;
+}
 .logo{
     margin-left: 10px;
     margin-top: -18px;
+    height: 150px;
 }
 .sidebar{
     width: 180px;
-    border: 2px none;
+    border: none;
     height: calc(100vh - 35px);
     padding: 10px;
-    position: fixed;
-    background-color: rgb(0, 0, 0);
-
+    background-color: rgb(255, 255, 255);
 }
 .content{
-
+    width: 350px;
+}
+main{
+    float: center;
 }
 .hdr{
     text-align: end;
     margin-bottom: -5px;
     font-size: 16px;
     font-family: 'Segoe UI', 'Open Sans', 'Helvetica Neue', sans-serif;
-    color: rgb(118, 118, 118);
+    color: rgb(106, 106, 106);
+    transition: transform 0.2s ease-out;
+}
+.parent{
+    width: auto;
+    border: none;
+    padding: 10px;
+
 }
 .hdr:hover{
-    color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
     cursor: pointer;
     transform: scale(1.05);
+    
+}
+.logo:hover{
+    transform: scale(1.05);
+}
+.hdr:hover::before{
+        content: "";
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        background: url(images/logo.png) no-repeat center;
+        background-size: contain;
+        transform: translateY(30%);
+        
+    }
+
+@media screen and (max-width:600px){
+    main{
+        width: auto;
+    }
+    .sidebar{
+        width: 130px;
+    }
+    .logo{
+        width: 95px;
+        height: 95px;
+    }
 }
