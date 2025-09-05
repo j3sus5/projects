@@ -6,8 +6,9 @@
         </title>
         <link rel="icon" type="images/png" href =images/logo.png>
         <link rel="stylesheet" href="style.css">
+        <script src="https://kit.fontawesome.com/5995bf4999.js" crossorigin="anonymous"></script>
     </head>
-    <body>
+    <body class="section">
         <aside class="sidebar">
             <div>
                 <h1>
@@ -15,44 +16,40 @@
                         <img src="images/pfp.png" class="logo"></h1>
                     </a>
                 <hr class="hdr">
-                <br>
-                <p class="hdr">flooring</p>
-                <p class="hdr">fencing</p>
-                <p class="hdr">showers</p>
-                <p class="hdr">patio</p>
-                <p class="hdr">campfire</p>
-                <p class="hdr">gardening</p>
-                <p class="hdr">mailbox</p>
                 
-                <br><br>
+                <p class="hdr">Flooring</p>
+                <p class="hdr">Fencing</p>
+                <p class="hdr">Showers</p>
+                <p class="hdr">Patio</p>
+                <p class="hdr">Campfire</p>
+                <p class="hdr">Gardening</p>
+                <p class="hdr">Mailbox</p>
+                
                 <hr class="hdr">
-                <br>
-                <p class="hdr">about</p>
-                <p class="hdr">contact us</p>
-                <br><br><hr class="hdr"><br>
-                <!--<button>facebook</button>
-                <button>email</button>
-                </a>
-            
-                <a href="https://www.instagram.com/">
-                <button style="border-radius: 25px;">Instagram</button>
-                </a>-->
+                <p class="hdr">About</p>
+                <p class="hdr">Contact Us</p>
+                <hr class="hdr">
+                <div class="socials">
+                    <a href="https://www.tiktok.com/@lopez.stone.tile" target="_blank"><i id="tiktok" class="fa-brands fa-tiktok fa-l"></i></a>
+                    <i id="instagram" class="fa-brands fa-instagram fa-xl"></i>
+                    <i id="facebook" class="fa-brands fa-facebook-f fa-l"></i>
+                </div>
             </div>
         </aside>    
         <main class="parent">
             <!-- this is a comment-->
             <form action="" method="POST" class="content">
-                <label for="Name">Name </label><br>
-                <input type="text" id="name" placeholder="first last" minlength="1" maxlength="20" required><br><br>
+                <label for="Name" id="name">Name </label>
+                <input type="text" id="name" placeholder="first last" minlength="1" maxlength="20" required><br>
 
-                <label for="email">Email </label><br>
-                <input type="email" id="email" placeholder="example@gmail.com" required><br><br>
+                <label for="email" id="email">Email </label>
+                <input type="email" id="email" placeholder="example@gmail.com" required><br>
 
-                <label for="phone"> Phone </label><br>
-                <input type="tel" id="phone" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required><br><br>
+                <label for="phone" id="phone"> Phone </label>
+                <input type="tel" id="phone" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required><br>
 
-                <label for="info"> Comments </label><br>
-                <textarea id="info" rows="10" cols="30" placeholder="'questions/concerns/estimate information'" required></textarea><br><br>
+                <label for="info" id="info"> Comments </label>
+                <textarea id="info" rows="10" placeholder="'questions/concerns/estimate information'" required></textarea><br>
                 <input type="reset">
                 <input type="submit">
             </form>
