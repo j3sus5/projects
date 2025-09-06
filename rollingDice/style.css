@@ -7,21 +7,21 @@
     padding: 10px 8px;
     border: 10px solid rgb(134, 1, 1);
     border-radius: 10px;
-    width: 500px;
-    height: 270px;
+    width: 400px;
+    height: 200px;
     border-radius: 10px;
 
 }
 body{
     background-color: rgb(38, 38, 38);
-    height: 100vh;
+    height: 95vh;
     display: grid;
     place-items: center;
-    grid-template-rows: auto 1fr; 
     align-items: start;
+    grid-template-rows: auto minmax(0, 1fr);
 }
 button{
-    font-size: 1rem;
+    font-size: 0.75rem;
     padding: 8px 10px;
     border-radius: 10px;
     border: none;
@@ -38,26 +38,37 @@ button:active{
     background-color: rgb(156, 1, 1);
 }
 input{
-    font-size: 2rem;
+    font-size: 1.5rem;
     width: 120px;
+    margin-bottom: 10px;
     text-align: center;
     font-weight: bold;
     border-radius: 5px;
 }
 #diceResult{
-    margin: 5px
+    margin: 10px;
+    font-size: 1.5rem;
+    height: fit-content;
+    
 }
 #diceImages img{
-    width: 150px;
-    margin: 10px;
-    display: flex;
+    width: 80px;
+    margin: 20px;
+    height: fit-content;
+   
 }
 #sndcontainer{
-    width: 95%;
-    margin: 0 auto;
-    height: calc(100vh - 200px);
-    background-color: white;
-    align-content: center;
-
+    grid-row: 2;
+    margin-top: 10px;
+    width: 85%;
+    border: 10px solid rgb(134, 1, 1);
+    background-color: aliceblue;
+    display: flex;
+    flex-direction: column;
+    
+    align-items: center;
+    border-radius: 10px;
+    min-height: calc(95vh - 250px); 
+    margin-bottom: 20px;
 
 }
