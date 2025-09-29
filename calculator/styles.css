@@ -1,0 +1,100 @@
+body{
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: rgb(30, 30, 30);
+}
+
+#calculator{
+    font-family: Arial, sans-serif;
+    background-color: black;
+    border-radius: 15px;
+    max-width: 500px;
+    overflow: hidden;
+    position: relative;
+    box-sizing: border-box;
+    border: 3px solid rgb(250, 250, 250);
+}
+#display-wrap{
+    height: 200px;
+    overflow: hidden;
+    box-sizing: border-box;
+    padding: 0 15px;
+    direction: rtl;
+}
+#display{
+    overflow: hidden;
+    box-sizing: border-box;
+    direction: ltr;
+    white-space: nowrap;
+    display: block;           
+    width: 100%;   
+    padding: 10px;
+    font-size: 3rem;
+    color: white;
+    background-color: black;
+    border: none;
+    transform: translateY(100px);
+    text-align: right;          
+}
+#border-line{
+    border-bottom: 0.5px solid rgb(147, 146, 146);
+    width: 90%;
+    margin: 0 auto;
+}
+#keys{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    justify-content: end;
+    gap: 15px;
+    padding: 25px;
+}
+.empty{
+    background-color: black;
+    border: none;
+    cursor: default;
+}
+.empty:hover{
+    background-color: black;
+}
+.empty:active{
+    background-color: none;
+}
+.operator-btn{
+    background-color: orange;
+}
+.operator-btn:hover{
+    background-color: hsl(39, 100%, 60%);
+}
+.operator-btn:active{
+    background-color: hsl(39, 100%, 70%);
+}
+.other{
+    background-color: rgb(158, 158, 158);
+}
+.other:hover{
+    background-color: hsl(0, 0%, 72%);
+}
+.other:active{
+    background-color: hsl(0, 0%, 82%);
+}
+button{
+    width: 100px;
+    height: 70px;
+    border-radius: 50px;
+    border: 2px solid rgb(128, 128, 128);
+    background-color: rgb(82, 82, 82);
+    color: white;
+    font-size: 2.5rem;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+}
+button:hover{
+    background-color: hsl(0, 0%, 45%);
+}
+button:active{
+    background-color: hsl(0, 0%, 55%);
+    transform: scale(1.1);
+}
