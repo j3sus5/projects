@@ -22,4 +22,10 @@ async function fetchData(){
     }
 }
 
-fetchData()
+document.getElementById("search").addEventListener("submit", (e) =>{
+    e.preventDefault()
+    fetchData();
+})
+
+
+
