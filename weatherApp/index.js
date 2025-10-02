@@ -58,7 +58,8 @@ function displayWeatherInfo(data){
 
     card.textContent = "";
     card.style.display = "flex";
-
+    const sheet = document.querySelector(".sheet");
+    sheet.classList.toggle("night", isNight);
     document.body.classList.toggle("night", isNight);
     card.classList.toggle("night", isNight);
     
@@ -91,7 +92,7 @@ function displayWeatherInfo(data){
 
 }
 
-function getWeatherEmoji(weatherId, isNight = false){
+function getWeatherEmoji(weatherId, isNight){
     switch(true){
         case (weatherId >= 200 && weatherId < 300): return "⛈️";
         case (weatherId >= 300 && weatherId < 400): return "🌧️";

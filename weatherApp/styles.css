@@ -40,11 +40,11 @@ body.night::before{
     padding: 10px;
     font-size: 2rem;
     font-weight: bold;
-    border: 2px solid black;
+    border: 2px solid rgb(0, 0, 0);
     border-radius: 10px;
     margin: 10px;
     width: 300px;
-    
+
 }
 button[type="submit"]{
     padding: 10px 20px;
@@ -68,7 +68,7 @@ button[type="submit"]:active{
         rgb(104, 232, 255), 
         rgb(255, 211, 131));
     padding: 50px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.449);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
     min-width: 300px;
     min-height: 400px;
     display: flex;
@@ -78,12 +78,11 @@ button[type="submit"]:active{
     margin-top: 50px;
 }
 .card.night{
+    border: 10px double white;
     background: linear-gradient(
         180deg,
         rgb(28, 38, 64),
-        rgb(15, 23, 48)
-
-    )
+        rgb(15, 23, 48));
 }
 .sheet{
     background-color: white;
@@ -94,6 +93,10 @@ button[type="submit"]:active{
     padding: 50px;
     border: 10px double rgb(110, 231, 255);
     border-radius: 25px;
+}
+.sheet.night{
+    background-color: rgb(14, 14, 14);
+    border-color: white;
 }
 h1{
     font-size: 3.5rem;
@@ -130,8 +133,6 @@ p{
 }
 
 body.night .cityDisplay,
-body.night .tempDisplay,
-body.night .humidityDisplay,
-body.night .descDisplay{
+body.night .tempDisplay{
     color: rgb(232, 238, 252);
 }
