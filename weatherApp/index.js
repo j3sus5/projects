@@ -55,7 +55,7 @@ function displayWeatherInfo(data){
         } = data
     
     const isNight = (dt < sunrise) || (dt > sunset);
-
+    
     card.textContent = "";
     card.style.display = "flex";
     const sheet = document.querySelector(".sheet");
