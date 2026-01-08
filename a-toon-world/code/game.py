@@ -1,7 +1,7 @@
-import pygame # type: ignore
+import pygame 
 import sys
 from level import Level
-from pytmx.util_pygame import load_pygame # type: ignore
+from pytmx.util_pygame import load_pygame
 from settings import *
 from os.path import join
 

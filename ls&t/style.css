@@ -10,6 +10,9 @@ body {
     width: 350px;
     
 }
+a{
+    text-decoration: none;
+}
 #email{
     width: 350px;
     
