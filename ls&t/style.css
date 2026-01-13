@@ -3,9 +3,14 @@
 }
 
 body {
-    display: grid;
-    grid-template-columns: 1fr 9fr;
+  margin: 0;
+  min-height: 100vh;
+
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 24px;                       
 }
+
 #name{
     width: 350px;
     
@@ -26,11 +31,17 @@ a{
     
 }
 .logo{
-    margin-left: 10px;
-    margin-top: -18px;
     height: 150px;
+    margin-left: 40px;
+    margin-top: 10px;
 }
-
+.lo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    height: auto;
+}
 .sidebar{
     border: none;
     height: calc(100vh - 30px);
@@ -53,9 +64,7 @@ hr.hdr{
     justify-content: center; 
     height: calc(100vh - 30px);
 }
-main{
-    float: center;
-}
+
 p.hdr{
     text-align: end;
     margin-bottom: -5px;
@@ -142,4 +151,18 @@ p.hdr:hover::before{
         width: 95px;
         height: 95px;
     }
+}
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.gallery img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  object-position: center;
+  
 }
