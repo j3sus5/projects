@@ -1,0 +1,5 @@
+i made it do a normal run first with the default knn value
+
+then after displaying charts it prompts user in terminal to enter new k value
+
+also in my computer since i used .py file this time, only one graph displays at a time, so i have to click x on eucledian scatter_plot pop up to see the manhattan

@@ -1,0 +1,125 @@
+Customer_ID,Complaint_Type,Complaint_Details,Time_to_Resolve
+101,Technical Issue,"Internet connection is slow",45
+102,Product Issue,"Defective product received",60
+103,Billing Issue,"Incorrect charges on bill",30
+104,Technical Issue,"Unable to access account",20
+105,Product Issue,"Missing parts in package",40
+106,Billing Issue,"Late payment fee charged unfairly",50
+107,Technical Issue,"Software not functioning properly",35
+108,Product Issue,"Wrong item shipped",55
+109,Billing Issue,"Payment not posted to account",25
+110,Technical Issue,"Printer not working",30
+111,Product Issue,"Damaged product received",65
+112,Billing Issue,"Refund not processed",50
+113,Technical Issue,"Email not syncing",15
+114,Product Issue,"Incorrect item shipped",60
+115,Billing Issue,"Double billing error",40
+116,Technical Issue,"Slow computer performance",25
+117,Product Issue,"Wrong size delivered",55
+118,Billing Issue,"Overcharged for service",35
+119,Technical Issue,"App not working on phone",10
+120,Product Issue,"Incorrect color received",50
+121,Billing Issue,"Billing cycle incorrect",30
+122,Technical Issue,"Cannot connect to Wi-Fi",20
+123,Product Issue,"Expired product received",65
+124,Billing Issue,"Payment rejected",45
+125,Technical Issue,"Computer virus detected",30
+126,Product Issue,"Wrong quantity shipped",60
+127,Billing Issue,"Unauthorized charges on account",50
+128,Technical Issue,"Software installation error",35
+129,Product Issue,"Package lost in transit",70
+130,Billing Issue,"Late payment penalty charged",40
+131,Technical Issue,"Cannot download file",25
+132,Product Issue,"Wrong item color delivered",55
+133,Billing Issue,"Payment not received",35
+134,Technical Issue,"Bluetooth not working on device",15
+135,Product Issue,"Package damaged in transit",60
+136,Billing Issue,"Overdue payment notice received",45
+137,Technical Issue,"Device not turning on",20
+138,Product Issue,"Incorrect product description",50
+139,Billing Issue,"Incorrect account information",30
+140,Technical Issue,"Unable to print document",25
+141,Product Issue,"Wrong model delivered",55
+142,Billing Issue,"Incorrect payment amount",40
+143,Technical Issue,"Unable to access email account",10
+144,Product Issue,"Package never delivered",70
+145,Billing Issue,"Unauthorized subscription charges",50
+146,Technical Issue,"Device freezing",35
+147,Product Issue,"Wrong product dimensions",60
+148,Billing Issue,"Incorrect payment date",35
+149,Technical Issue,"Application not responding",15
+150,Product Issue,"Missing accessory in package",50
+151,Billing Issue,"Payment reversal not processed",30
+152,Technical Issue,"Printer jammed",20
+153,Product Issue,"Incorrect product specifications",65
+154,Billing Issue,"Late payment notice received",45
+155,Technical Issue,"Password reset not working",30
+156,Product Issue,"Wrong item size delivered",55
+157,Billing Issue,"Billing address incorrect",35
+158,Technical Issue,"Cannot access website",10
+159,Product Issue,"Defective product features",60
+160,Billing Issue,"Payment not applied to account",50
+161,Technical Issue,"Mobile app not functioning",35
+162,Product Issue,"Missing component in package",65
+163,Billing Issue,"Overcharged for product",45
+1001,Technical Issue,"Internet connection is slow",15
+1002,Billing Issue,"Incorrect billing statement",30
+1003,Product Issue,"Product arrived damaged",45
+1004,Technical Issue,"Device not working",20
+1005,Billing Issue,"Unauthorized charges",30
+1006,Technical Issue,"Software glitch",10
+1007,Product Issue,"Wrong item received",60
+1008,Billing Issue,"Late payment fee",15
+1009,Technical Issue,"Unable to login",25
+1010,Product Issue,"Product not as described",40
+1011,Billing Issue,"Billing address incorrect",20
+1012,Technical Issue,"Slow website loading",10
+1013,Product Issue,"Missing parts",50
+1014,Billing Issue,"Double billing",35
+1015,Technical Issue,"System error",30
+1016,Product Issue,"Product not delivered",60
+1017,Billing Issue,"Payment not credited",25
+1018,Technical Issue,"App not working",20
+1019,Product Issue,"Expired product received",50
+1020,Billing Issue,"Inaccurate meter reading",30
+1021,Technical Issue,"Website down",25
+1022,Product Issue,"Defective product",60
+1023,Billing Issue,"Billing dispute",40
+1024,Technical Issue,"Poor call quality",15
+1025,Product Issue,"Wrong color received",50
+1026,Billing Issue,"Payment not processed",20
+1027,Technical Issue,"Unable to send emails",30
+1028,Product Issue,"Wrong size received",50
+1029,Billing Issue,"Payment declined",15
+1030,Technical Issue,"App crashing",10
+1031,Product Issue,"Product arrived late",60
+1032,Billing Issue,"Billing system error",20
+1033,Technical Issue,"Device overheating",25
+1034,Product Issue,"Product missing accessories",40
+1035,Billing Issue,"Credit not applied",35
+1036,Technical Issue,"Slow system response",10
+1037,Product Issue,"Product not functional",60
+1038,Billing Issue,"Account hacked",45
+1039,Technical Issue,"Network issue",20
+1040,Product Issue,"Product damaged in transit",50
+1041,Billing Issue,"Incorrect payment",20
+1042,Technical Issue,"Printer not working",15
+1043,Product Issue,"Product not working",60
+1044,Billing Issue,"Refund not processed",40
+1045,Technical Issue,"Poor Wi-Fi signal",30
+1046,Product Issue,"Wrong item shipped",50
+1047,Billing Issue,"Overcharged",35
+1048,Technical Issue,"Battery drain",20
+1049,Product Issue,"Missing user manual",40
+1050,Billing Issue,"Duplicate billing",25
+1051,Technical Issue,"Server down",30
+1052,Product Issue,"Product not durable",60
+1053,Billing Issue,"Payment not received",45
+1054,Technical Issue,"Unable to receive emails",25
+1055,Product Issue,"Wrong quantity received",50
+1056,Billing Issue,"Wrong payment amount",20
+1057,Technical Issue,"Device freezing",15
+1058,Product Issue,"Product not functional as advertised",60
+1059,Billing Issue,"Service charge incorrect",30
+1060,Technical Issue,"App not updating",20
+1061,Product Issue,"Product not compatible with device",40

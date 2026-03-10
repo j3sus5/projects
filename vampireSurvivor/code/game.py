@@ -14,7 +14,7 @@ class Game:
         self.clock = pygame.time.Clock()
         self.running = True
         
-        self.all_sprites = AllSprites()
+        self.all_sprites = AllSprites()s
         self.collision_sprites = pygame.sprite.Group()
         self.bullet_sprites = pygame.sprite.Group()
         self.enemy_sprites = pygame.sprite.Group()
@@ -30,9 +30,15 @@ class Game:
         self.load_images()
         self.setup()
 
+        self.shoot_sound = pygame.mixer.Sound(join('..', 'audio', 'shoot.wav'))
+        self.shoot_sound.set_volume(0.3)
+        self.impact_sound = pygame.mixer.Sound(join('..', 'audio', 'impact.ogg'))
+        self.music = pygame.mixer.Sound(join('..', 'audio', 'music.wav'))
+        self.music.set_volume(0.2)
+        self.music.play(loops= -1)
+
     def load_images(self):
         self.bullet_surf = pygame.image.load(join('..', 'images', 'gun', 'bullet.png')).convert_alpha()
-
         folders = list(walk(join('..', 'images', 'enemies')))[0][1]
 
         self.enemy_frames = {}
@@ -46,11 +52,23 @@ class Game:
 
     def input(self):
         if pygame.mouse.get_pressed()[0] and self.can_shoot:
+            self.shoot_sound.play()
             pos = self.gun.rect.center + self.gun.player_direction * 50
             Bullet(self.bullet_surf, pos, self.gun.player_direction, (self.all_sprites, self.bullet_sprites))
             self.can_shoot = False
             self.shoot_time = pygame.time.get_ticks()
-    
+    def bulletCollision(self):
+        if self.bullet_sprites:
+            for bullet in self.bullet_sprites:
+                collision_sprites = pygame.sprite.spritecollide(bullet, self.enemy_sprites, False, pygame.sprite.collide_mask)
+                if collision_sprites:
+                    self.impact_sound.play()
+                    for sprite in collision_sprites:
+                        sprite.destroy()
+                    bullet.kill()
+    def playerCollision(self):
+        if pygame.sprite.spritecollide(self.player, self.enemy_sprites, False, pygame.sprite.collide_mask):
+            self.running = False
     def gun_timer(self):
         if not self.can_shoot:
             current_time = pygame.time.get_ticks()
@@ -82,11 +100,13 @@ class Game:
                 if event.type == pygame.QUIT:
                     self.running = False
                 if event.type == self.enemy_event:
-                    Enemy(choice(self.spawn_positions), self.enemy_frames[choice(list(self.enemy_frames))], (self.all_sprites, self.enemy_event), self.player, self.collision_sprites)
+                    Enemy(choice(self.spawn_positions), self.enemy_frames[choice(list(self.enemy_frames))], (self.all_sprites, self.enemy_sprites), self.player, self.collision_sprites)
             self.input()
-
+            self.gun_timer()
             self.display.fill('black')
             self.all_sprites.update(dt)
+            self.bulletCollision()
+            self.playerCollision()
             self.all_sprites.draw(self.player.rect.center)
             pygame.display.update()
 

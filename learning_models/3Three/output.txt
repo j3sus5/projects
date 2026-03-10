@@ -1,0 +1,61 @@
+PS C:\Users\Jesus\MachineLearning\3Three> python MLchoice.py knn iris.csv
+DataSet: iris.csv
+Machine Learning Algorithm Chosen: KNN
+Accuracy of Training (Scratch): 98%
+Accuracy of ScikitLearn Function: 98%
+
+Prediction Point: [4.6,3.4,1.4,0.3]
+Predicted Class: Iris-setosa
+Actual Class: Iris-setosa
+
+PS C:\Users\Jesus\MachineLearning\3Three> python MLchoice.py svm iris.csv
+DataSet: iris.csv
+Machine Learning Algorithm Chosen: SVM
+Accuracy of Training (Scratch): 91%
+Accuracy of ScikitLearn Function: 100%
+
+Prediction Point: [4.6,3.4,1.4,0.3]
+Predicted Class: Iris-setosa
+Actual Class: Iris-setosa
+
+PS C:\Users\Jesus\MachineLearning\3Three> python MLchoice.py knn breast-cancer.csv
+DataSet: breast-cancer.csv
+Machine Learning Algorithm Chosen: KNN
+Accuracy of Training (Scratch): 94%
+Accuracy of ScikitLearn Function: 94%
+
+Prediction Point: [14.97,16.95,96.22,685.9,0.09855,0.07885,0.02602,0.03781,0.178,0.0565,0.2713,1.217,1.893,24.28,0.00508,0.0137,0.00728,0.00907,0.0135,0.00171,16.11,23.0,104.6,793.7,0.1216,0.1637,0.06648,0.08485,0.2404,0.06428]
+Predicted Class: B
+Actual Class: B
+
+PS C:\Users\Jesus\MachineLearning\3Three> python MLchoice.py svm breast-cancer.csv
+DataSet: breast-cancer.csv
+Machine Learning Algorithm Chosen: SVM
+Accuracy of Training (Scratch): 95%
+Accuracy of ScikitLearn Function: 94%
+
+Prediction Point: [14.97,16.95,96.22,685.9,0.09855,0.07885,0.02602,0.03781,0.178,0.0565,0.2713,1.217,1.893,24.28,0.00508,0.0137,0.00728,0.00907,0.0135,0.00171,16.11,23.0,104.6,793.7,0.1216,0.1637,0.06648,0.08485,0.2404,0.06428]
+Predicted Class: B
+Actual Class: B
+
+PS C:\Users\Jesus\MachineLearning\3Three> python MLchoice.py knn data_banknote_authentication.txt
+DataSet: data_banknote_authentication.txt
+Machine Learning Algorithm Chosen: KNN
+Accuracy of Training (Scratch): 100%
+Accuracy of ScikitLearn Function: 100%
+
+Prediction Point: [4.9923,7.8653,-2.3515,-0.71984]
+Predicted Class: 0
+Actual Class: 0
+
+PS C:\Users\Jesus\MachineLearning\3Three> python MLchoice.py svm data_banknote_authentication.txt
+DataSet: data_banknote_authentication.txt
+Machine Learning Algorithm Chosen: SVM
+Accuracy of Training (Scratch): 99%
+Accuracy of ScikitLearn Function: 99%
+
+Prediction Point: [4.9923,7.8653,-2.3515,-0.71984]
+Predicted Class: 0
+Actual Class: 0
+
+PS C:\Users\Jesus\MachineLearning\3Three>
