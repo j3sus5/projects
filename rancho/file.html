@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rancho Hacienda San José</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --brown:    #3B1F0A;
+      --cream:    #F5EDD8;
+      --gold:     #C4943A;
+      --gold-lt:  #E0B86A;
+      --sage:     #7A8C6E;
+      --ink:      #1A1009;
+      --mid:      #7A5230;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--ink);
+      color: var(--cream);
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─────────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 48px;
+      background: rgba(26, 16, 9, 0.88);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(196,148,58,0.25);
+      transition: background 0.3s;
+    }
+
+    .nav-logo {
+      display: flex; align-items: center; gap: 12px;
+    }
+
+    .nav-logo svg {
+      width: 40px; height: 40px; filter: invert(72%) sepia(43%) saturate(600%) hue-rotate(5deg) brightness(95%);
+    }
+
+    .nav-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem; letter-spacing: 0.12em;
+      color: var(--gold); text-transform: uppercase;
+      line-height: 1.2;
+    }
+    .nav-brand span { display: block; font-size: 0.65rem; letter-spacing: 0.22em; color: var(--cream); font-family: 'Lato', sans-serif; font-weight: 300; }
+
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      color: var(--cream); text-decoration: none;
+      font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase;
+      opacity: 0.8; transition: opacity 0.2s, color 0.2s;
+    }
+    .nav-links a:hover { opacity: 1; color: var(--gold); }
+
+    /* ─── HERO ────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+      background: linear-gradient(160deg, #3B1F0A 0%, #1A1009 60%, #0D0806 100%);
+    }
+
+    /* Atmospheric texture overlay */
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 60% 50%, rgba(196,148,58,0.08) 0%, transparent 70%),
+                  radial-gradient(ellipse 40% 80% at 20% 80%, rgba(59,31,10,0.6) 0%, transparent 60%);
+    }
+
+    /* Large background monogram */
+    .hero-monogram {
+      position: absolute;
+      right: -40px; top: 50%;
+      transform: translateY(-50%);
+      width: min(620px, 65vw);
+      opacity: 0.07;
+      pointer-events: none;
+      filter: invert(72%) sepia(43%) saturate(600%) hue-rotate(5deg);
+    }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      text-align: center;
+      padding: 140px 24px 80px;
+      max-width: 820px;
+    }
+
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 0.7rem; letter-spacing: 0.35em;
+      text-transform: uppercase; color: var(--gold);
+      border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold);
+      padding: 6px 24px; margin-bottom: 32px;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 700; line-height: 1.05;
+      color: var(--cream); margin-bottom: 8px;
+    }
+    .hero-title em {
+      font-style: italic; color: var(--gold);
+    }
+
+    .hero-subtitle {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+      font-weight: 400; font-style: italic;
+      color: rgba(245,237,216,0.55);
+      margin-bottom: 40px; letter-spacing: 0.04em;
+    }
+
+    .hero-divider {
+      width: 60px; height: 1px;
+      background: var(--gold); margin: 0 auto 40px;
+    }
+
+    .hero-desc {
+      font-size: 1rem; color: rgba(245,237,216,0.7);
+      max-width: 520px; margin: 0 auto 52px;
+      letter-spacing: 0.02em;
+    }
+
+    .hero-cta {
+      display: inline-flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--ink);
+      padding: 14px 36px;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase;
+      font-weight: 700; text-decoration: none;
+      border: none; cursor: pointer;
+      transition: background 0.25s, transform 0.2s;
+    }
+    .btn-primary:hover { background: var(--gold-lt); transform: translateY(-1px); }
+
+    .btn-outline {
+      border: 1px solid rgba(196,148,58,0.5);
+      color: var(--gold);
+      padding: 14px 36px;
+      font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase;
+      font-weight: 700; text-decoration: none;
+      transition: border-color 0.25s, background 0.25s;
+    }
+    .btn-outline:hover { border-color: var(--gold); background: rgba(196,148,58,0.08); }
+
+    /* ─── STATS BAR ───────────────────────────────────────── */
+    .stats-bar {
+      background: var(--brown);
+      border-top: 1px solid rgba(196,148,58,0.2);
+      border-bottom: 1px solid rgba(196,148,58,0.2);
+      display: flex; justify-content: center; flex-wrap: wrap;
+    }
+
+    .stat-item {
+      padding: 32px 56px;
+      text-align: center;
+      border-right: 1px solid rgba(196,148,58,0.15);
+    }
+    .stat-item:last-child { border-right: none; }
+
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem; font-weight: 600;
+      color: var(--gold); display: block;
+    }
+    .stat-label {
+      font-size: 0.68rem; letter-spacing: 0.22em;
+      text-transform: uppercase; color: rgba(245,237,216,0.5);
+      margin-top: 4px; display: block;
+    }
+
+    /* ─── SECTION LAYOUT ──────────────────────────────────── */
+    section { padding: 100px 48px; max-width: 1280px; margin: 0 auto; }
+    .section-full { max-width: 100%; padding-left: 0; padding-right: 0; }
+
+    .section-eyebrow {
+      font-size: 0.68rem; letter-spacing: 0.3em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 600; line-height: 1.15;
+      margin-bottom: 24px;
+    }
+
+    .section-line {
+      width: 48px; height: 2px;
+      background: var(--gold); margin-bottom: 32px;
+    }
+
+    /* ─── HORSES GRID ─────────────────────────────────────── */
+    #caballos { background: #120B04; }
+    #caballos > .inner { max-width: 1280px; margin: 0 auto; padding: 100px 48px; }
+
+    .horses-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2px;
+      margin-top: 56px;
+    }
+
+    .horse-card {
+      position: relative; overflow: hidden;
+      background: var(--brown);
+      cursor: pointer;
+    }
+
+    .horse-img {
+      width: 100%; aspect-ratio: 4/3;
+      object-fit: cover;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 5rem;
+      background: linear-gradient(135deg, #3B1F0A 0%, #5C3015 50%, #2A1407 100%);
+      transition: transform 0.5s ease;
+    }
+
+    .horse-card:hover .horse-img { transform: scale(1.04); }
+
+    .horse-img-inner {
+      width: 100%; aspect-ratio: 4/3;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #3B1F0A 0%, #5C3015 50%, #2A1407 100%);
+      font-size: 5rem;
+      transition: transform 0.5s ease;
+      overflow: hidden;
+    }
+    .horse-card:hover .horse-img-inner { transform: scale(1.04); }
+
+    .horse-badge {
+      position: absolute; top: 16px; left: 16px;
+      background: var(--gold); color: var(--ink);
+      font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase;
+      font-weight: 700; padding: 4px 12px;
+    }
+
+    .horse-info {
+      padding: 24px 28px 28px;
+    }
+
+    .horse-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem; font-weight: 600; margin-bottom: 4px;
+    }
+    .horse-breed {
+      font-size: 0.75rem; color: var(--gold);
+      letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px;
+    }
+    .horse-details {
+      display: flex; gap: 20px;
+      font-size: 0.78rem; color: rgba(245,237,216,0.55);
+      margin-bottom: 18px;
+    }
+    .horse-detail { display: flex; flex-direction: column; gap: 2px; }
+    .horse-detail strong { color: var(--cream); font-size: 0.82rem; }
+
+    .horse-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; color: var(--gold-lt);
+      font-weight: 600;
+    }
+
+    .horse-price small {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.7rem; color: rgba(245,237,216,0.4);
+      margin-left: 4px;
+    }
+
+    .horse-cta {
+      display: inline-block;
+      margin-top: 16px;
+      font-size: 0.72rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--gold);
+      text-decoration: none; border-bottom: 1px solid rgba(196,148,58,0.35);
+      padding-bottom: 2px;
+      transition: border-color 0.2s;
+    }
+    .horse-cta:hover { border-color: var(--gold); }
+
+    /* ─── STORY SECTION ───────────────────────────────────── */
+    #historia {
+      background: linear-gradient(180deg, #120B04 0%, var(--brown) 100%);
+      padding: 0;
+    }
+    #historia .inner {
+      max-width: 1280px; margin: 0 auto;
+      padding: 100px 48px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+      align-items: center;
+    }
+
+    .story-img-block {
+      position: relative;
+    }
+
+    .story-img-frame {
+      width: 100%; aspect-ratio: 3/4;
+      background: linear-gradient(145deg, #5C3015, #3B1F0A);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9rem;
+      border: 1px solid rgba(196,148,58,0.15);
+    }
+
+    .story-accent {
+      position: absolute;
+      bottom: -24px; right: -24px;
+      width: 160px; height: 160px;
+      border: 2px solid rgba(196,148,58,0.2);
+      z-index: -1;
+    }
+
+    .story-body p {
+      margin-bottom: 20px;
+      color: rgba(245,237,216,0.75);
+      font-size: 0.97rem; line-height: 1.85;
+    }
+
+    /* ─── SERVICES ────────────────────────────────────────── */
+    #servicios { background: #0D0806; }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1px;
+      margin-top: 56px;
+      border: 1px solid rgba(196,148,58,0.1);
+    }
+
+    .service-card {
+      padding: 44px 36px;
+      background: #120B04;
+      border: 1px solid rgba(196,148,58,0.08);
+      transition: background 0.3s;
+    }
+    .service-card:hover { background: rgba(59,31,10,0.7); }
+
+    .service-icon { font-size: 2.2rem; margin-bottom: 20px; }
+
+    .service-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; margin-bottom: 12px;
+    }
+    .service-desc {
+      font-size: 0.87rem; color: rgba(245,237,216,0.55); line-height: 1.75;
+    }
+
+    /* ─── CONTACT ─────────────────────────────────────────── */
+    #contacto {
+      background: var(--brown);
+      border-top: 1px solid rgba(196,148,58,0.2);
+    }
+    #contacto .inner {
+      max-width: 1280px; margin: 0 auto;
+      padding: 100px 48px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+      align-items: start;
+    }
+
+    .contact-info p {
+      color: rgba(245,237,216,0.65); font-size: 0.95rem; margin-bottom: 36px;
+    }
+
+    .contact-detail {
+      display: flex; align-items: flex-start; gap: 14px;
+      margin-bottom: 22px;
+    }
+    .contact-icon { font-size: 1.1rem; margin-top: 2px; color: var(--gold); }
+    .contact-text { font-size: 0.9rem; color: rgba(245,237,216,0.75); line-height: 1.5; }
+    .contact-text strong { display: block; color: var(--cream); margin-bottom: 2px; }
+
+    /* Form */
+    .contact-form { display: flex; flex-direction: column; gap: 16px; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
+    .form-group label {
+      font-size: 0.68rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: rgba(245,237,216,0.5);
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: rgba(245,237,216,0.05);
+      border: 1px solid rgba(196,148,58,0.2);
+      color: var(--cream);
+      padding: 12px 16px;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+      appearance: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--gold); }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(245,237,216,0.25); }
+    .form-group select option { background: var(--brown); }
+    .form-group textarea { resize: vertical; min-height: 110px; }
+
+    .form-submit {
+      background: var(--gold); color: var(--ink);
+      padding: 15px 40px; border: none; cursor: pointer;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.78rem; letter-spacing: 0.22em; text-transform: uppercase;
+      font-weight: 700; align-self: flex-start;
+      transition: background 0.25s, transform 0.2s;
+    }
+    .form-submit:hover { background: var(--gold-lt); transform: translateY(-1px); }
+
+    /* ─── FOOTER ──────────────────────────────────────────── */
+    footer {
+      background: var(--ink);
+      border-top: 1px solid rgba(196,148,58,0.15);
+      padding: 40px 48px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 20px;
+    }
+
+    .footer-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.9rem; color: var(--gold);
+      letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .footer-brand span { display: block; font-family: 'Lato', sans-serif; font-size: 0.65rem; color: rgba(245,237,216,0.35); letter-spacing: 0.2em; margin-top: 3px; }
+
+    .footer-copy { font-size: 0.72rem; color: rgba(245,237,216,0.3); letter-spacing: 0.08em; }
+
+    .footer-logo svg { width: 32px; height: 32px; filter: invert(72%) sepia(43%) saturate(600%) hue-rotate(5deg) brightness(70%); }
+
+    /* ─── RESPONSIVE ──────────────────────────────────────── */
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .nav-links { gap: 20px; }
+      section, #historia .inner, #contacto .inner, #caballos > .inner { padding: 72px 24px; }
+      #historia .inner, #contacto .inner { grid-template-columns: 1fr; gap: 48px; }
+      .stat-item { padding: 24px 28px; }
+      footer { padding: 32px 24px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .hero-title { font-size: 2.4rem; }
+    }
+
+    /* ─── SCROLL ANIMATION ────────────────────────────────── */
+    .reveal {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+  </style>
+</head>
+<body>
+
+<!-- SVG Logo definition -->
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="logo-mark" viewBox="0 0 200 220">
+    <!-- Simplified representation of the monogram cross brand -->
+    <g fill="currentColor">
+      <!-- Cross on top -->
+      <rect x="90" y="5" width="20" height="50" rx="2"/>
+      <rect x="68" y="18" width="64" height="16" rx="2"/>
+      <!-- S shape left -->
+      <path d="M30 80 Q10 80 10 100 Q10 120 50 120 Q90 120 90 140 Q90 160 70 160 Q50 160 50 155" stroke="currentColor" stroke-width="18" fill="none" stroke-linecap="round"/>
+      <!-- J shape center -->
+      <line x1="100" y1="65" x2="100" y2="175" stroke="currentColor" stroke-width="18" stroke-linecap="round"/>
+      <path d="M100 175 Q100 200 78 200 Q60 200 60 188" stroke="currentColor" stroke-width="18" fill="none" stroke-linecap="round"/>
+      <!-- P shape right -->
+      <line x1="115" y1="65" x2="115" y2="175" stroke="currentColor" stroke-width="18" stroke-linecap="round"/>
+      <path d="M115 65 Q155 65 155 97 Q155 130 115 130" stroke="currentColor" stroke-width="18" fill="none" stroke-linecap="round"/>
+    </g>
+  </symbol>
+</svg>
+
+<!-- ─── NAV ─────────────────────────────────────────────── -->
+<nav>
+  <div class="nav-logo">
+    <svg viewBox="0 0 200 220"><use href="#logo-mark"/></svg>
+    <div class="nav-brand">
+      Rancho Hacienda
+      <span>San José</span>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#caballos">Caballos</a></li>
+    <li><a href="#historia">Historia</a></li>
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <a href="#contacto" class="btn-primary" style="font-size:0.7rem;padding:10px 24px;">Consultar</a>
+</nav>
+
+<!-- ─── HERO ────────────────────────────────────────────── -->
+<div class="hero">
+  <!-- Large background monogram -->
+  <svg class="hero-monogram" viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
+    <use href="#logo-mark"/>
+  </svg>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Caballos de Sangre · Tradición · Calidad</div>
+    <h1 class="hero-title">
+      Rancho<br/>
+      Hacienda<br/>
+      <em>San José</em>
+    </h1>
+    <p class="hero-subtitle">Donde la nobleza del caballo cobra vida</p>
+    <div class="hero-divider"></div>
+    <p class="hero-desc">
+      Crianza y venta de caballos de alta calidad, seleccionados con rigor y pasión. 
+      Cada ejemplar refleja décadas de tradición ecuestre en el corazón de México.
+    </p>
+    <div class="hero-cta">
+      <a href="#caballos" class="btn-primary">Ver Caballos en Venta</a>
+      <a href="#historia" class="btn-outline">Nuestra Historia</a>
+    </div>
+  </div>
+</div>
+
+<!-- ─── STATS BAR ───────────────────────────────────────── -->
+<div class="stats-bar">
+  <div class="stat-item reveal">
+    <span class="stat-num">30+</span>
+    <span class="stat-label">Años de Tradición</span>
+  </div>
+  <div class="stat-item reveal">
+    <span class="stat-num">200+</span>
+    <span class="stat-label">Caballos Vendidos</span>
+  </div>
+  <div class="stat-item reveal">
+    <span class="stat-num">15</span>
+    <span class="stat-label">Razas Disponibles</span>
+  </div>
+  <div class="stat-item reveal">
+    <span class="stat-num">100%</span>
+    <span class="stat-label">Garantía de Linaje</span>
+  </div>
+</div>
+
+<!-- ─── HORSES FOR SALE ─────────────────────────────────── -->
+<div id="caballos">
+  <div class="inner">
+    <p class="section-eyebrow reveal">Ejemplares en Venta</p>
+    <h2 class="section-title reveal">Nuestros Caballos</h2>
+    <div class="section-line reveal"></div>
+    <p class="reveal" style="max-width:560px;color:rgba(245,237,216,0.65);font-size:0.95rem;">
+      Cada caballo en nuestro rancho ha sido criado bajo los más altos estándares de salud, 
+      temperamento y linaje. Contáctenos para visitar y conocer personalmente nuestros ejemplares.
+    </p>
+
+    <div class="horses-grid">
+
+      <div class="horse-card reveal">
+        <div class="horse-img-inner">🐎</div>
+        <span class="horse-badge">Destacado</span>
+        <div class="horse-info">
+          <div class="horse-name">El Sultán</div>
+          <div class="horse-breed">Azteca · Semental</div>
+          <div class="horse-details">
+            <div class="horse-detail">
+              <span>Edad</span>
+              <strong>6 años</strong>
+            </div>
+            <div class="horse-detail">
+              <span>Color</span>
+              <strong>Tordo</strong>
+            </div>
+            <div class="horse-detail">
+              <span>Altura</span>
+              <strong>15.3 HH</strong>
+            </div>
+          </div>
+          <div class="horse-price">$85,000 <small>MXN</small></div>
+          <a href="#contacto" class="horse-cta">Solicitar información →</a>
+        </div>
+      </div>
+
+      <div class="horse-card reveal">
+        <div class="horse-img-inner">🐴</div>
+        <span class="horse-badge">Nueva llegada</span>
+        <div class="horse-info">
+          <div class="horse-name">Doña Paloma</div>
+          <div class="horse-breed">Cuarto de Milla · Yegua</div>
+          <div class="horse-details">
+            <div class="horse-detail">
+              <span>Edad</span>
+              <strong>4 años</strong>
+            </div>
+            <div class="horse-detail">
+              <span>Color</span>
+              <strong>Palomino</strong>
+            </div>
+            <div class="horse-detail">
+              <span>Altura</span>
+              <strong>14.2 HH</strong>
+            </div>
+          </div>
+          <div class="horse-price">$65,000 <small>MXN</small></div>
+          <a href="#contacto" class="horse-cta">Solicitar información →</a>
+        </div>
+      </div>
+
+      <div class="horse-card reveal">
+        <div class="horse-img-inner">🐎</div>
+        <div class="horse-info">
+          <div class="horse-name">Rayado del Norte</div>
+          <div class="horse-breed">Paso Fino · Semental</div>
+          <div class="horse-details">
+            <div class="horse-detail">
+              <span>Edad</span>
+              <strong>7 años</strong>
+            </div>
+            <div class="horse-detail">
+              <span>Color</span>
+              <strong>Alazán</strong>
+            </div>
+            <div class="horse-detail">
+              <span>Altura</span>
+              <strong>14.3 HH</strong>
+            </div>
+          </div>
+          <div class="horse-price">$72,000 <small>MXN</small></div>
+          <a href="#contacto" class="horse-cta">Solicitar información →</a>
+        </div>
+      </div>
+
+      <div class="horse-card reveal">
+        <div class="horse-img-inner">🐴</div>
+        <div class="horse-info">
+          <div class="horse-name">La Reina Negra</div>
+          <div class="horse-breed">Frisón Cruzado · Yegua</div>
+          <div class="horse-details">
+            <div class="horse-detail">
+              <span>Edad</span>
+              <strong>5 años</strong>
+            </div>
+            <div class="horse-detail">
+              <span>Color</span>
+              <strong>Negro Azabache</strong>
+            </div>
+            <div class="horse-detail">
+              <span>Altura</span>
+              <strong>16.0 HH</strong>
+            </div>
+          </div>
+          <div class="horse-price">$110,000 <small>MXN</small></div>
+          <a href="#contacto" class="horse-cta">Solicitar información →</a>
+        </div>
+      </div>
+
+      <div class="horse-card reveal">
+        <div class="horse-img-inner">🐎</div>
+        <span class="horse-badge">Reservado</span>
+        <div class="horse-info">
+          <div class="horse-name">Cielo Raso</div>
+          <div class="horse-breed">Árabe Puro · Semental</div>
+          <div class="horse-details">
+            <div class="horse-detail">
+              <span>Edad</span>
+              <strong>3 años</strong>
+            </div>
+            <div class="horse-detail">
+              <span>Color</span>
+              <strong>Blanco</strong>
+            </div>
+            <div class="horse-detail">
+              <span>Altura</span>
+              <strong>15.0 HH</strong>
+            </div>
+          </div>
+          <div class="horse-price">$95,000 <small>MXN</small></div>
+          <a href="#contacto" class="horse-cta">Solicitar información →</a>
+        </div>
+      </div>
+
+      <div class="horse-card reveal" style="background:rgba(196,148,58,0.05);border:1px solid rgba(196,148,58,0.18);display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:320px;text-align:center;padding:48px 32px;gap:16px;">
+        <svg style="width:56px;height:56px;opacity:0.4" viewBox="0 0 200 220"><use href="#logo-mark"/></svg>
+        <div style="font-family:'Playfair Display',serif;font-size:1.1rem;color:rgba(245,237,216,0.6);">¿Busca algo especial?</div>
+        <p style="font-size:0.85rem;color:rgba(245,237,216,0.4);max-width:220px;">Contáctenos y buscamos el ejemplar ideal para usted.</p>
+        <a href="#contacto" class="btn-primary" style="margin-top:8px;">Consultar</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ─── HISTORY / STORY ──────────────────────────────────── -->
+<div id="historia">
+  <div class="inner">
+    <div class="story-img-block reveal">
+      <div class="story-img-frame">🤠</div>
+      <div class="story-accent"></div>
+    </div>
+    <div class="story-body">
+      <p class="section-eyebrow">Nuestra Historia</p>
+      <h2 class="section-title reveal">Tres décadas de<br/><em style="font-style:italic;color:var(--gold);">pasión equina</em></h2>
+      <div class="section-line"></div>
+      <p class="reveal">
+        El Rancho Hacienda San José nació de una familia con el caballo en la sangre. 
+        Desde sus fundamentos hace más de treinta años, hemos cultivado una tradición 
+        de crianza responsable, selección rigurosa de reproductores y cuidado 
+        veterinario de primer nivel.
+      </p>
+      <p class="reveal">
+        Cada ejemplar que sale de nuestras instalaciones lleva consigo el sello de 
+        San José: salud comprobada, temperamento trabajado y linaje documentado. 
+        No vendemos un caballo — compartimos años de dedicación.
+      </p>
+      <p class="reveal">
+        Nuestro rancho cuenta con instalaciones modernas, pastizales naturales, 
+        herrería propia y un equipo veterinario de confianza para garantizar 
+        el bienestar de cada animal bajo nuestro cuidado.
+      </p>
+      <div style="margin-top:36px" class="reveal">
+        <a href="#contacto" class="btn-primary">Visitar el Rancho</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── SERVICES ────────────────────────────────────────── -->
+<section id="servicios">
+  <p class="section-eyebrow reveal">Lo que ofrecemos</p>
+  <h2 class="section-title reveal">Servicios del Rancho</h2>
+  <div class="section-line reveal"></div>
+
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-icon">🐎</div>
+      <div class="service-title">Venta de Caballos</div>
+      <p class="service-desc">Ejemplares seleccionados de diversas razas, con documentación completa, historial médico y garantía de origen.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🌾</div>
+      <div class="service-title">Pensión y Cuidado</div>
+      <p class="service-desc">Alojamiento completo con alimentación balanceada, herraje, baños y vigilancia permanente en pastizales naturales.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🏆</div>
+      <div class="service-title">Entrenamiento</div>
+      <p class="service-desc">Preparación para charreada, charrería, trail riding y doma vaquera con jinetes de experiencia comprobada.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🩺</div>
+      <div class="service-title">Servicio Veterinario</div>
+      <p class="service-desc">Atención médica, vacunación, desparasitación y certificados sanitarios con médicos veterinarios de confianza.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🧬</div>
+      <div class="service-title">Reproducción</div>
+      <p class="service-desc">Monta natural y transferencia de embriones con sementales de alto registro y pedigrí documentado.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🚛</div>
+      <div class="service-title">Traslado de Equinos</div>
+      <p class="service-desc">Transportación segura de caballos con vehículos especializados y personal capacitado a todo el país.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CONTACT ──────────────────────────────────────────── -->
+<div id="contacto">
+  <div class="inner">
+    <div>
+      <p class="section-eyebrow reveal">Hablemos</p>
+      <h2 class="section-title reveal">Contáctenos</h2>
+      <div class="section-line reveal"></div>
+      <p class="reveal">
+        Ya sea que busque comprar su primer caballo o añadir un ejemplar de élite 
+        a su caballeriza, estamos aquí para guiarle. Visítenos en el rancho o 
+        comuníquese con nosotros.
+      </p>
+
+      <div class="contact-detail reveal" style="margin-top:36px">
+        <span class="contact-icon">📍</span>
+        <div class="contact-text">
+          <strong>Ubicación</strong>
+          Rancho Hacienda San José<br/>Municipio San José, México
+        </div>
+      </div>
+
+      <div class="contact-detail reveal">
+        <span class="contact-icon">📞</span>
+        <div class="contact-text">
+          <strong>Teléfono</strong>
+          +52 (000) 000-0000<br/>WhatsApp disponible
+        </div>
+      </div>
+
+      <div class="contact-detail reveal">
+        <span class="contact-icon">✉️</span>
+        <div class="contact-text">
+          <strong>Correo electrónico</strong>
+          contacto@ranchosanjose.mx
+        </div>
+      </div>
+
+      <div class="contact-detail reveal">
+        <span class="contact-icon">🕐</span>
+        <div class="contact-text">
+          <strong>Horario de atención</strong>
+          Lunes – Sábado: 8:00 am – 6:00 pm<br/>Domingos: con cita previa
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <p class="section-eyebrow reveal" style="margin-bottom:20px">Formulario de contacto</p>
+      <div class="contact-form reveal">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nombre</label>
+            <input type="text" placeholder="Su nombre"/>
+          </div>
+          <div class="form-group">
+            <label>Teléfono</label>
+            <input type="tel" placeholder="+52 000 000 0000"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Correo electrónico</label>
+          <input type="email" placeholder="correo@ejemplo.com"/>
+        </div>
+        <div class="form-group">
+          <label>¿En qué está interesado?</label>
+          <select>
+            <option value="">— Seleccione una opción —</option>
+            <option>Comprar un caballo</option>
+            <option>Pensión y cuidado</option>
+            <option>Entrenamiento</option>
+            <option>Reproducción / monta</option>
+            <option>Servicio veterinario</option>
+            <option>Traslado de equinos</option>
+            <option>Otra consulta</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Mensaje</label>
+          <textarea placeholder="Cuéntenos más sobre lo que busca…"></textarea>
+        </div>
+        <button class="form-submit" onclick="handleSubmit(event)">Enviar consulta</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── FOOTER ───────────────────────────────────────────── -->
+<footer>
+  <div class="footer-brand">
+    Rancho Hacienda San José
+    <span>Tradición · Calidad · Pasión Equina</span>
+  </div>
+  <div class="footer-logo">
+    <svg viewBox="0 0 200 220"><use href="#logo-mark"/></svg>
+  </div>
+  <div class="footer-copy">© 2024 Rancho Hacienda San José. Todos los derechos reservados.</div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Form submit
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target;
+    const orig = btn.textContent;
+    btn.textContent = '✓ Mensaje enviado';
+    btn.style.background = 'var(--sage)';
+    btn.disabled = true;
+    setTimeout(() => {
+      btn.textContent = orig;
+      btn.style.background = '';
+      btn.disabled = false;
+    }, 3000);
+  }
+
+  // Nav scroll effect
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    nav.style.background = window.scrollY > 60
+      ? 'rgba(26, 16, 9, 0.97)'
+      : 'rgba(26, 16, 9, 0.88)';
+  });
+</script>
+
+</body>
+</html>
