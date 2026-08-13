@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Request a Quote | Eleazar Construction Co.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0b0c;
+      --bg-soft: #121214;
+      --card: rgba(255, 255, 255, 0.04);
+      --card-strong: rgba(255, 255, 255, 0.06);
+      --text: #f5f1e8;
+      --muted: #b8b1a4;
+      --gold: #c79a4b;
+      --gold-soft: #f0d7a7;
+      --border: rgba(255, 255, 255, 0.08);
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Inter", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top, rgba(199, 154, 75, 0.14), transparent 30%),
+        linear-gradient(180deg, #080809 0%, #0d0d0f 45%, #0b0b0c 100%);
+      min-height: 100vh;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .page {
+      width: min(1180px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 28px 0 80px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 34px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand img {
+      width: 76px;
+      height: auto;
+      display: block;
+      object-fit: contain;
+      filter: drop-shadow(0 10px 24px rgba(0,0,0,0.35));
+    }
+
+    .brand-text {
+      line-height: 1.15;
+    }
+
+    .brand-text strong {
+      display: block;
+      font-family: "Cinzel", serif;
+      font-size: 18px;
+      letter-spacing: 0.04em;
+    }
+
+    .brand-text span {
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .back-link {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.03);
+      padding: 12px 18px;
+      border-radius: 999px;
+      font-weight: 600;
+      transition: 0.25s ease;
+    }
+
+    .back-link:hover {
+      background: rgba(255,255,255,0.06);
+      transform: translateY(-2px);
+    }
+
+    .hero {
+      text-align: center;
+      padding: 26px 0 22px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      color: var(--gold-soft);
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: "Cinzel", serif;
+      font-size: clamp(38px, 6vw, 70px);
+      line-height: 1.08;
+      letter-spacing: 0.04em;
+    }
+
+    .hero p {
+      width: min(760px, 100%);
+      margin: 18px auto 0;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.9;
+    }
+
+    .quote-wrap {
+      margin-top: 34px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .form-card,
+    .info-card {
+      border-radius: 30px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .form-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
+    }
+
+    .info-card {
+      background: linear-gradient(180deg, rgba(199,154,75,0.16), rgba(199,154,75,0.07));
+      border-color: rgba(199,154,75,0.18);
+    }
+
+    .card-head {
+      padding: 28px 30px 18px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), transparent);
+    }
+
+    .card-head h2,
+    .info-card h3 {
+      margin: 0;
+      font-family: "Cinzel", serif;
+      font-size: 30px;
+    }
+
+    .card-head p,
+    .info-card p,
+    .info-card li {
+      margin: 10px 0 0;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    form {
+      padding: 28px 30px 32px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .field label {
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold-soft);
+      font-weight: 600;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,0.22);
+      color: var(--text);
+      border-radius: 18px;
+      padding: 16px 18px;
+      font: inherit;
+      outline: none;
+      transition: 0.2s ease;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #8d8579;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: rgba(199,154,75,0.45);
+      box-shadow: 0 0 0 4px rgba(199,154,75,0.10);
+    }
+
+    textarea {
+      min-height: 160px;
+      resize: vertical;
+    }
+
+    .submit-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+
+    .note {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+      max-width: 420px;
+    }
+
+    .btn {
+      padding: 15px 26px;
+      border-radius: 999px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: 0.25s ease;
+      background: linear-gradient(135deg, #d5ab61, #b68135);
+      color: #111;
+      box-shadow: 0 10px 30px rgba(199, 154, 75, 0.28);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 36px rgba(199,154,75,0.34);
+    }
+
+    .info-card {
+      padding: 30px;
+    }
+
+    .info-block + .info-block {
+      margin-top: 26px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .info-block h4 {
+      margin: 0 0 10px;
+      font-size: 18px;
+      color: #fff7e7;
+    }
+
+    .info-card ul {
+      margin: 12px 0 0;
+      padding-left: 18px;
+    }
+
+    .info-card li + li {
+      margin-top: 8px;
+    }
+
+    @media (max-width: 980px) {
+      .quote-wrap,
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page { width: min(1180px, calc(100% - 20px)); }
+      .card-head,
+      form,
+      .info-card { padding-left: 20px; padding-right: 20px; }
+      .brand img { width: 62px; }
+      .brand-text strong { font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="topbar">
+      <a href="index.html" class="brand">
+        <img src="ECC.png" alt="Eleazar Construction Co. Logo">
+        <div class="brand-text">
+          <strong>Eleazar Construction Co.</strong>
+          <span>Premium Fence • Tile • Custom Work</span>
+        </div>
+      </a>
+
+      <a href="index.html" class="back-link">← Back to Home</a>
+    </div>
+
+    <section class="hero">
+      <div class="eyebrow">Request a Quote</div>
+      <h1>Tell Us About<br>Your Project</h1>
+      <p>
+        Fill out the form below and send us the details of your fencing, tile, shower,
+        flooring, mailbox, or custom exterior project.
+      </p>
+    </section>
+
+    <div class="quote-wrap">
+      <div class="form-card">
+        <div class="card-head">
+          <h2>Project Details</h2>
+          <p>Give us the basics so we can understand your project and follow up with a quote.</p>
+        </div>
+
+        <form action="mailto:info@eleazarconstructionco.com" method="post" enctype="text/plain">
+          <div class="grid-2">
+            <div class="field">
+              <label for="name">Full Name</label>
+              <input id="name" type="text" name="Name" placeholder="Your full name" required>
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" type="email" name="Email" placeholder="your@email.com" required>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="field">
+              <label for="phone">Phone Number</label>
+              <input id="phone" type="tel" name="Phone" placeholder="(555) 555-5555">
+            </div>
+            <div class="field">
+              <label for="service">Service Needed</label>
+              <select id="service" name="Service">
+                <option value="">Select a service</option>
+                <option>Fencing</option>
+                <option>Board-on-Board Fencing</option>
+                <option>Single Fence</option>
+                <option>Tile Flooring</option>
+                <option>Shower Tile</option>
+                <option>Mailbox</option>
+                <option>Backsplash</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="field">
+              <label for="location">Project Location</label>
+              <input id="location" type="text" name="Location" placeholder="City or area">
+            </div>
+            <div class="field">
+              <label for="timeline">Preferred Timeline</label>
+              <input id="timeline" type="text" name="Timeline" placeholder="As soon as possible / next month / flexible">
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="details">Project Description</label>
+            <textarea id="details" name="Project Details" placeholder="Tell us what you want done, dimensions if you know them, style, materials, and any other details..." required></textarea>
+          </div>
+
+          <div class="submit-row">
+            <div class="note">
+              When you click send, this version opens your email app with the form details.
+            </div>
+            <button type="submit" class="btn">Send Quote Request</button>
+          </div>
+        </form>
+      </div>
+
+      <aside class="info-card">
+        <h3>What Helps Us Quote Faster</h3>
+
+        <div class="info-block">
+          <h4>Useful Details</h4>
+          <ul>
+            <li>Type of project and style you want</li>
+            <li>Approximate size or dimensions</li>
+            <li>Your city or service location</li>
+            <li>Any photos or inspiration you have</li>
+          </ul>
+        </div>
+
+        <div class="info-block">
+          <h4>Popular Requests</h4>
+          <p>Board-on-board fencing, single fences, tile flooring, shower tile, custom mailboxes, and backsplash work.</p>
+        </div>
+
+        <div class="info-block">
+          <h4>Direct Contact</h4>
+          <p>
+            Email: <a href="mailto:info@eleazarconstructionco.com">info@eleazarconstructionco.com</a><br>
+            Phone: <a href="tel:5555555555">(555) 555-5555</a>
+          </p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</body>
+</html>

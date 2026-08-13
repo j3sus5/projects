@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eleazar Construction Co.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-soft: #ffffff;
+      --card: rgba(255, 255, 255, 0.04);
+      --card-strong: rgba(255, 255, 255, 0.06);
+      --text: #f5f1e8;
+      --muted: #b8b1a4;
+      --gold: #c79a4b;
+      --gold-soft: #f0d7a7;
+      --border: rgba(255, 255, 255, 0.08);
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+      --radius: 22px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: "Inter", sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(199, 154, 75, 0.14), transparent 32%),
+        linear-gradient(180deg, #080809 0%, #0d0d0f 45%, #0b0b0c 100%);
+      color: var(--text);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .logo-box {
+      background: #ffffff;
+      border-radius: 10px;
+      padding-top: 12px;
+      padding-bottom: 12px;
+      display: block;
+      width: fit-content;
+      margin: 0 auto 24px;
+    }
+
+    .container {
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .section {
+      padding: 90px 0;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      color: var(--gold-soft);
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      margin-bottom: 70px;
+      font-weight: 600;
+      
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(255,255,255,0.02), transparent),
+        url("logo.png") no-repeat center 90px / min(520px, 70vw);
+      opacity: 0.12;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding-top: 120px;
+      padding-bottom: 100px;
+    }
+
+    .logo {
+      width: min(380px, 80vw);
+      margin: 0;
+      filter: drop-shadow(0 12px 30px rgba(0,0,0,0.35));
+    }
+
+    h1, h2, h3, h4, h5 {
+      margin: 0;
+    }
+
+    h1 {
+      font-family: "Cinzel", serif;
+      font-size: clamp(42px, 7vw, 82px);
+      line-height: 1.05;
+      letter-spacing: 0.04em;
+    }
+
+    .hero p {
+      width: min(760px, 100%);
+      margin: 24px auto 0;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.9;
+    }
+
+    .hero-buttons {
+      margin-top: 34px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .btn {
+      padding: 15px 26px;
+      border-radius: 999px;
+      font-weight: 600;
+      transition: 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #d5ab61, #b68135);
+      color: #ffffff;
+      box-shadow: 0 10px 30px rgba(199, 154, 75, 0.28);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 36px rgba(199, 154, 75, 0.34);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.03);
+      border-color: var(--border);
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.06);
+      transform: translateY(-2px);
+    }
+
+    .stats {
+      margin-top: 48px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .stat {
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 22px;
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+    }
+
+    .stat h3 {
+      font-family: "Cinzel", serif;
+      font-size: 28px;
+      color: var(--gold-soft);
+      margin-bottom: 8px;
+    }
+
+    .stat p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .section-heading {
+      max-width: 760px;
+      margin-bottom: 44px;
+    }
+
+    .section-heading h2 {
+      font-family: "Cinzel", serif;
+      font-size: clamp(30px, 4vw, 52px);
+      margin-bottom: 16px;
+    }
+
+    .section-heading p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.9;
+      font-size: 17px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 28px;
+    }
+
+    .service-panel {
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.025));
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 30px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-panel::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(199,154,75,0.08), transparent 35%);
+      pointer-events: none;
+    }
+
+    .service-panel > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .service-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .service-top h3 {
+      font-family: "Cinzel", serif;
+      font-size: 30px;
+    }
+
+    .tag {
+      white-space: nowrap;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 10px 14px;
+      border-radius: 999px;
+      color: var(--gold-soft);
+      background: rgba(199, 154, 75, 0.12);
+      border: 1px solid rgba(199, 154, 75, 0.18);
+    }
+
+    .service-list {
+      display: grid;
+      gap: 16px;
+    }
+
+    .service-item {
+      padding: 22px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: rgba(9, 9, 10, 0.5);
+      transition: 0.25s ease;
+    }
+
+    .service-item:hover {
+      transform: translateY(-4px);
+      border-color: rgba(199, 154, 75, 0.28);
+      background: rgba(255,255,255,0.05);
+    }
+
+    .service-item h4 {
+      font-size: 20px;
+      margin-bottom: 10px;
+      color: #fff8ea;
+    }
+
+    .service-item p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 15px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr 1fr;
+      gap: 20px;
+    }
+
+    .gallery-card {
+      position: relative;
+      min-height: 260px;
+      border-radius: 26px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.85)),
+        linear-gradient(135deg, rgba(199,154,75,0.18), rgba(255,255,255,0.03));
+      display: flex;
+      align-items: flex-end;
+      padding: 24px;
+    }
+
+    .gallery-card.tall {
+      min-height: 540px;
+      grid-row: span 2;
+    }
+
+    .gallery-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at top left, rgba(240,215,167,0.18), transparent 32%),
+        linear-gradient(135deg, rgba(255,255,255,0.04), transparent 60%);
+      pointer-events: none;
+    }
+
+    .gallery-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .gallery-content span {
+      display: inline-block;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--gold-soft);
+      margin-bottom: 10px;
+    }
+
+    .gallery-content h3 {
+      font-family: "Cinzel", serif;
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .gallery-content p {
+      margin: 0;
+      color: #ddd3c0;
+      line-height: 1.8;
+      max-width: 90%;
+    }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .why-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .why-card .eyebrow {
+      margin-bottom: 12px;
+    }
+
+    .why-card h3 {
+      font-size: 24px;
+      margin-bottom: 12px;
+      font-family: "Cinzel", serif;
+    }
+
+    .why-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .testimonial {
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .stars {
+      color: var(--gold-soft);
+      letter-spacing: 0.18em;
+      margin-bottom: 16px;
+      font-size: 14px;
+    }
+
+    .testimonial p {
+      margin: 0 0 18px;
+      color: var(--muted);
+      line-height: 1.9;
+    }
+
+    .testimonial strong {
+      color: var(--text);
+      font-size: 15px;
+    }
+
+    .contact-wrap {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 24px;
+    }
+
+    .contact-card,
+    .info-card {
+      border-radius: 28px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 34px;
+    }
+
+    .contact-card {
+      background: var(--card);
+    }
+
+    .info-card {
+      background: linear-gradient(180deg, rgba(199,154,75,0.18), rgba(199,154,75,0.08));
+      border-color: rgba(199,154,75,0.18);
+    }
+
+    .contact-card h2,
+    .info-card h3 {
+      font-family: "Cinzel", serif;
+    }
+
+    .contact-card p,
+    .info-card p,
+    .info-card li {
+      color: var(--muted);
+      line-height: 1.85;
+    }
+
+    .contact-grid {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .contact-box {
+      background: rgba(0,0,0,0.22);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 20px;
+    }
+
+    .contact-box span {
+      display: block;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--gold-soft);
+      margin-bottom: 10px;
+    }
+
+    .contact-box strong {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .info-card ul {
+      padding-left: 18px;
+      margin: 18px 0 0;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 26px 0 34px;
+      text-align: center;
+      color: #8e877c;
+      font-size: 14px;
+    }
+
+    @media (max-width: 1080px) {
+      .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .gallery-card.tall {
+        grid-row: auto;
+        min-height: 320px;
+      }
+    }
+
+    @media (max-width: 980px) {
+      .services-grid,
+      .why-grid,
+      .contact-wrap,
+      .stats,
+      .testimonials-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .service-top {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .contact-grid,
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: auto;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .section {
+        padding: 70px 0;
+      }
+
+      .hero-inner {
+        padding-top: 100px;
+        padding-bottom: 80px;
+      }
+
+      .container {
+        width: min(var(--max), calc(100% - 24px));
+      }
+
+      .service-panel,
+      .contact-card,
+      .info-card,
+      .why-card,
+      .stat,
+      .testimonial,
+      .gallery-card {
+        padding: 22px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="logo-box">
+        <img src="ECC.png" alt="Eleazar Construction Co. Logo" class="logo">
+      </div>
+
+      <div class="eyebrow">Fence • Tile • Custom Exterior Work</div>
+      <h1>Built With Precision.<br>Finished With Pride.</h1>
+      <p>
+        Eleazar Construction Co. delivers premium fencing, tile, and custom exterior work
+        with a focus on craftsmanship, clean finishes, and long-lasting quality that elevates your property.
+      </p>
+
+      <div class="hero-buttons">
+        <a href="#services" class="btn btn-primary">Explore Services</a>
+        <a href="#contact" class="btn btn-secondary">Request a Quote</a>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <h3>Premium</h3>
+          <p>High-end finishes designed to look refined, durable, and professionally built.</p>
+        </div>
+        <div class="stat">
+          <h3>Custom</h3>
+          <p>Every project is tailored to the property, layout, and style you want.</p>
+        </div>
+        <div class="stat">
+          <h3>Trusted</h3>
+          <p>Quality-focused service with straightforward communication from start to finish.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="services">
+    <div class="container">
+      <div class="section-heading">
+        <div class="eyebrow">Our Services</div>
+        <h2>Luxury craftsmanship for exterior and interior upgrades</h2>
+        <p>
+          From beautifully built fences to elegant tile work, we create projects that add
+          curb appeal, value, and a polished finish to your space.
+        </p>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-panel">
+          <div class="service-top">
+            <h3>Fencing</h3>
+            <div class="tag">Privacy & Security</div>
+          </div>
+
+          <div class="service-list">
+            <div class="service-item">
+              <h4>Board-on-Board Fencing</h4>
+              <p>
+                A premium privacy fence style with overlapping boards for better coverage,
+                a fuller appearance, and strong visual appeal.
+              </p>
+            </div>
+
+            <div class="service-item">
+              <h4>Single Fence</h4>
+              <p>
+                A classic, clean fence design that creates a refined boundary for homes,
+                businesses, and outdoor spaces.
+              </p>
+            </div>
+
+            <div class="service-item">
+              <h4>Custom Fence Projects</h4>
+              <p>
+                Tailored fence builds designed around your property, layout, and preferred finish.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-panel">
+          <div class="service-top">
+            <h3>Tile</h3>
+            <div class="tag">Interior & Accent Work</div>
+          </div>
+
+          <div class="service-list">
+            <div class="service-item">
+              <h4>Flooring</h4>
+              <p>
+                Durable, elegant tile flooring installations for kitchens, living areas,
+                entryways, and high-traffic spaces.
+              </p>
+            </div>
+
+            <div class="service-item">
+              <h4>Showers</h4>
+              <p>
+                Custom shower tile work with refined layouts, precise detailing,
+                and a clean premium finish.
+              </p>
+            </div>
+
+            <div class="service-item">
+              <h4>Mailboxes</h4>
+              <p>
+                Custom tile and stone mailbox designs that elevate curb appeal
+                and create a distinctive first impression.
+              </p>
+            </div>
+
+            <div class="service-item">
+              <h4>Backsplashes</h4>
+              <p>
+                Stylish backsplash and accent tile work that brings texture,
+                character, and a custom designer feel to your space.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="gallery">
+    <div class="container">
+      <div class="section-heading">
+        <div class="eyebrow">Featured Work</div>
+        <h2>A premium gallery section for your best projects</h2>
+        <p>
+          Replace these image files with your real fencing, tile, shower, flooring, and mailbox photos.
+          Just put your images in the same folder as this HTML file and keep the filenames below.
+        </p>
+      </div>
+
+      <div class="gallery-grid">
+        <div class="gallery-card tall" style="background: linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.82)), url('gallery-fence-main.jpg') center/cover no-repeat;">
+          <div class="gallery-content">
+            <span>Featured Project</span>
+            <h3>Luxury Fencing</h3>
+            <p>Use this large featured spot for your strongest fence project photo with the cleanest finish and best curb appeal.</p>
+          </div>
+        </div>
+
+        <div class="gallery-card" style="background: linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.82)), url('gallery-shower.jpg') center/cover no-repeat;">
+          <div class="gallery-content">
+            <span>Tile Work</span>
+            <h3>Custom Shower</h3>
+            <p>Perfect spot for a polished shower installation photo.</p>
+          </div>
+        </div>
+
+        <div class="gallery-card" style="background: linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.82)), url('gallery-mailbox.jpg') center/cover no-repeat;">
+          <div class="gallery-content">
+            <span>Exterior Detail</span>
+            <h3>Stone Mailbox</h3>
+            <p>Show curb appeal pieces that make the brand feel custom.</p>
+          </div>
+        </div>
+
+        <div class="gallery-card" style="background: linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.82)), url('gallery-flooring.jpg') center/cover no-repeat;">
+          <div class="gallery-content">
+            <span>Flooring</span>
+            <h3>Elegant Tile Floors</h3>
+            <p>Use wide flooring shots to show pattern, spacing, and finish quality.</p>
+          </div>
+        </div>
+
+        <div class="gallery-card" style="background: linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.82)), url('gallery-board-on-board.jpg') center/cover no-repeat;">
+          <div class="gallery-content">
+            <span>Fence Install</span>
+            <h3>Board-on-Board</h3>
+            <p>Highlight alignment, color, craftsmanship, and final presentation.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <div class="eyebrow">Why Choose Us</div>
+        <h2>Work that feels custom, polished, and built to last</h2>
+      </div>
+
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="eyebrow">Craftsmanship</div>
+          <h3>Detail First</h3>
+          <p>
+            We focus on the details that separate ordinary work from premium results:
+            cleaner lines, stronger finishes, and a more refined final look.
+          </p>
+        </div>
+
+        <div class="why-card">
+          <div class="eyebrow">Customization</div>
+          <h3>Made for Your Property</h3>
+          <p>
+            Every fencing and tile project is shaped around your layout, goals,
+            and personal style instead of a one-size-fits-all approach.
+          </p>
+        </div>
+
+        <div class="why-card">
+          <div class="eyebrow">Professionalism</div>
+          <h3>Reliable Service</h3>
+          <p>
+            Clear communication, quality-focused work, and results you will feel proud
+            to show off when the project is complete.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="reviews">
+    <div class="container">
+      <div class="section-heading">
+        <div class="eyebrow">Client Impressions</div>
+        <h2>Reviews that make the brand feel established</h2>
+        <p>
+          I changed these from generic placeholders to cleaner review blocks you can quickly swap with real customer names or initials.
+        </p>
+      </div>
+
+      <div class="testimonials-grid">
+        <div class="testimonial">
+          <div class="stars">★★★★★</div>
+          <p>
+            The finished fence completely changed the look of our backyard. Clean lines, solid build, and a very professional result.
+          </p>
+          <strong>— J. R.</strong>
+        </div>
+
+        <div class="testimonial">
+          <div class="stars">★★★★★</div>
+          <p>
+            Our shower tile came out beautiful. The layout, cuts, and final finish made the whole bathroom feel upgraded.
+          </p>
+          <strong>— M. T.</strong>
+        </div>
+
+        <div class="testimonial">
+          <div class="stars">★★★★★</div>
+          <p>
+            The custom mailbox and tile details added so much curb appeal. It looks high-end and feels built to last.
+          </p>
+          <strong>— A. G.</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="contact">
+    <div class="container">
+      <div class="contact-wrap">
+        <div class="contact-card" style="grid-column: span 2; text-align:center; padding:60px;">
+          <div class="eyebrow">Get Started</div>
+          <h2 style="font-size:42px;">Ready to Upgrade Your Home?</h2>
+          <p style="max-width:700px;margin:20px auto;">
+            Whether it’s a new fence, tile flooring, shower remodel, or custom exterior work,
+            we’re ready to bring your vision to life with premium craftsmanship.
+          </p>
+
+          <div style="margin-top:30px; display:flex; justify-content:center; gap:16px; flex-wrap:wrap;">
+            <a href="quote.html" class="btn btn-primary">Request a Quote</a>
+            <a href="tel:5555555555" class="btn btn-secondary">Call Now</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      © 2026 Eleazar Construction Co. • Premium Fence, Tile & Custom Work
+    </div>
+  </footer>
+
+</body>
+</html>
