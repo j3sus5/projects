@@ -1,0 +1,204 @@
+.gallery-page { 
+    padding-top: 60px; 
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.gallery-page-header {
+  padding: 64px 60px 48px;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--mid);
+  text-decoration: none;
+  transition: color 0.2s;
+  margin-bottom: 20px;
+}
+
+.back-link:hover { color: var(--navy); }
+.back-link::before { content: '←'; font-size: 14px; }
+
+.gallery-page-header .section-title { margin-top: 10px; }
+
+.gallery-page-header p {
+  font-size: 14px;
+  color: var(--mid);
+  max-width: 300px;
+  line-height: 1.7;
+  text-align: right;
+}
+
+.gallery-nav {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.gallery-nav a {
+  padding: 16px 32px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--mid);
+  text-decoration: none;
+  border-right: 1px solid var(--rule);
+  transition: background 0.15s, color 0.15s;
+}
+
+.gallery-nav a:hover { background: var(--cream); color: var(--navy); }
+.gallery-nav a.active { color: var(--navy); background: var(--cream); border-bottom: 2px solid var(--navy); }
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--rule);
+  flex: 1;
+  min-height: 60vh;
+}
+
+.photo-item {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--cream);
+  aspect-ratio: 4/3;
+}
+
+.photo-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.photo-item:hover img { transform: scale(1.04); }
+
+.photo-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: var(--cream);
+  color: var(--mid);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.photo-placeholder svg { opacity: 0.3; }
+
+.photo-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(13,31,51,0);
+  display: flex;
+  align-items: flex-end;
+  padding: 20px;
+  transition: background 0.3s;
+}
+
+.photo-item:hover .photo-overlay { background: rgba(13,31,51,0.45); }
+
+.photo-caption {
+  font-size: 12px;
+  color: white;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.3s, transform 0.3s;
+  letter-spacing: 0.5px;
+}
+
+.photo-item:hover .photo-caption { opacity: 1; transform: translateY(0); }
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(13,31,51,0.97);
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.lightbox.open { display: flex; }
+
+.lightbox img {
+  max-width: 90vw;
+  max-height: 80vh;
+  object-fit: contain;
+  display: block;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 24px; right: 32px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.lightbox-close:hover { color: white; }
+
+.lightbox-nav {
+  display: flex;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.lightbox-nav button {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.6);
+  padding: 10px 24px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.lightbox-nav button:hover { color: white; border-color: white; }
+
+.lightbox-counter {
+  font-size: 10px;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 2px;
+  margin-top: 12px;
+}
+
+@media (max-width: 900px) {
+  .gallery-page-header { padding: 40px 24px 32px; flex-direction: column; align-items: flex-start; }
+  .gallery-page-header p { text-align: left; }
+  .photo-grid { grid-template-columns: repeat(2, 1fr); }
+  .gallery-nav a { padding: 14px 20px; font-size: 10px; }
+}
+
+@media (max-width: 500px) {
+  .photo-grid { grid-template-columns: 1fr; }
+}

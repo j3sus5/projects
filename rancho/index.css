@@ -1100,3 +1100,107 @@ footer {
   .footer-top { flex-direction: column; gap: 32px; }
   .footer-bottom { flex-direction: column; align-items: flex-start; }
 }
+
+/* ── MEDIUM SCREENS ── */
+@media (max-width: 1500px) and (min-width: 901px) {
+  nav { padding: 0 32px; }
+
+  .hero {
+    height: calc(100vh - 60px);
+    grid-template-rows: 50% 10% 40%;
+  }
+
+  .hero-left { padding: 20px 40px; }
+
+  .hero-eyebrow { margin-bottom: 16px; }
+
+  .hero h1 { font-size: 42px; }
+
+  .hero-tagline { font-size: 15px; margin-bottom: 20px; }
+
+  .hero-services { margin-bottom: 24px; }
+
+  .hero-btn { padding: 10px 28px; font-size: 10px; }
+
+  .services-intro { padding: 0 24px !important; }
+
+  .services-intro .section-title { font-size: 20px; }
+
+  .svc { padding: 16px 20px; }
+
+  .svc h3 { font-size: 22px; margin-bottom: 8px; }
+
+  .svc p { font-size: 12px; margin-bottom: 16px; line-height: 1.6; }
+
+  .svc-num { margin-bottom: 14px; }
+
+  .svc-list li { font-size: 11px; }
+
+  .gallery-header { padding: 48px 40px 36px; }
+
+  .gallery-header .section-title { font-size: 32px; }
+
+  .about-left { padding: 56px 40px; }
+
+  .about-right { padding: 56px 40px; }
+
+  .astat { padding: 24px 20px; }
+
+  .astat .num { font-size: 36px; }
+
+  .process { padding: 64px 40px; }
+
+  .pstep { padding: 32px 24px; }
+
+  .testi-intro { padding: 56px 40px 40px; }
+
+  .tcard { padding: 36px 28px; }
+
+  .tcard-quote { font-size: 16px; }
+
+  .contact-left { padding: 64px 40px; }
+
+  .contact-right { padding: 64px 40px; }
+
+  footer { padding: 48px 40px 28px; }
+}
+
+@media (max-height: 1000px) {
+  .hero h1 { font-size: clamp(28px, 4vh, 60px); }
+  .hero-tagline { font-size: clamp(12px, 1.8vh, 18px); margin-bottom: clamp(12px, 2vh, 32px); }
+  .hero-eyebrow { margin-bottom: clamp(8px, 1.5vh, 28px); }
+  .hero-services { margin-bottom: clamp(10px, 2vh, 36px); }
+  .hero-btn { padding: clamp(8px, 1.2vh, 13px) 36px; }
+  .hero img { width: clamp(180px, 30vh, 500px) !important; margin-bottom: clamp(8px, 1.5vh, 20px) !important; padding: clamp(8px, 1.2vh, 20px) !important; }
+
+  /* Service cards */
+  .svc h3 { font-size: clamp(16px, 2.5vh, 32px); }
+  .svc p { font-size: clamp(10px, 1.4vh, 14px); margin-bottom: clamp(10px, 1.5vh, 28px); }
+  .svc { padding: clamp(10px, 2vh, 24px) 32px; }
+  .svc-num { margin-bottom: clamp(8px, 1.5vh, 28px); }
+  .svc-list li { font-size: clamp(10px, 1.3vh, 13px); }
+
+  /* Section headers throughout the page */
+  .section-title { font-size: clamp(24px, 4vh, 52px); }
+  .section-label { font-size: clamp(8px, 1.2vh, 10px); margin-bottom: clamp(6px, 1vh, 10px); }
+  .gallery-header .section-title { font-size: clamp(22px, 3.5vh, 44px); }
+  .about-left .section-title { font-size: clamp(22px, 3.5vh, 44px); }
+  .process-header .section-title { font-size: clamp(22px, 3.5vh, 44px); }
+  .testi-intro .section-title { font-size: clamp(22px, 3.5vh, 44px); }
+  .contact-left .section-title { font-size: clamp(22px, 3.5vh, 44px); }
+  .services-intro .section-title { font-size: clamp(16px, 2.5vh, 28px); }
+
+  /* Stat numbers */
+  .astat .num { font-size: clamp(28px, 4vh, 48px); }
+  .rating-num { font-size: clamp(32px, 5vh, 56px); }
+  .pstep h4 { font-size: clamp(16px, 2.5vh, 24px); }
+  .pstep p { font-size: clamp(10px, 1.4vh, 13px); }
+}
+
+@media (max-height: 600px) {
+  .hero-left { padding: 10px 60px; }
+  .services-intro { padding: 0 32px !important; }
+  .svc { padding: 8px 32px; }
+  .svc-list { display: none; }
+  .section-title { font-size: clamp(18px, 3vh, 36px); }
+}
