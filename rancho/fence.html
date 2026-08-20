@@ -7,10 +7,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="index.css">
 <link rel="stylesheet" href="gallery.css">
-
 </head>
 <body>
- 
+
 <nav>
   <a href="index.html"><img src="eleazar_blue.png" alt="Eleazar Tile & Fencing" class="nav-logo"></a>
   <ul class="nav-links">
@@ -20,94 +19,151 @@
     <li><a href="index.html#contact" class="cta">Get a Quote</a></li>
   </ul>
 </nav>
- 
+
 <div class="gallery-page">
   <div class="gallery-page-header">
     <div>
-      <a href="eleazar.html" class="back-link">Back to Home Page</a>
+      <a href="index.html" class="back-link">Back to Home</a>
       <div class="section-label">Gallery</div>
       <h1 class="section-title">Fencing <em>Projects</em></h1>
     </div>
-    <p>Pine, Cedar, and wire fencing. Custom gates built across the DFW area.</p>
+    <p>Pine, cedar, and wire fencing. Custom gates built across the DFW area.</p>
   </div>
- 
+
   <div class="gallery-nav">
-    <a href="tile-gallery.html">Tile</a>
-    <a href="stone-gallery.html">Stone</a>
-    <a href="fence-gallery.html" class="active">Fencing</a>
+    <a href="tile.html">Tile</a>
+    <a href="stone.html">Stone</a>
+    <a href="fence.html" class="active">Fencing</a>
+    <a href="custom.html">Custom Work</a>
   </div>
- 
+
   <div class="photo-grid" id="photoGrid">
-    <!--
-      ADD YOUR PHOTOS HERE. Copy and paste this block for each photo:
- 
-      <div class="photo-item" onclick="openLightbox(0)">
-        <img src="your-photo.jpg" alt="Project description">
-        <div class="photo-overlay">
-          <span class="photo-caption">Frisco, TX — Master Bathroom</span>
-        </div>
+    <div class="photo-item" onclick="openLightbox(0)">
+      <img src="fence3.png" alt="Board on board fencing">
+      <div class="photo-overlay">
+        <span class="photo-caption">Board on Board Fencing</span>
       </div>
- 
-      Change the number in openLightbox() to match the photo's position (0, 1, 2, 3...)
-      Change src to your photo filename
-      Change the caption to describe the project
-    -->
-      <div class="photo-item" onclick="openLightbox(0)">
-        <img src="fence3.png" alt="Project description">
-        <div class="photo-overlay">
-          <span class="photo-caption">Board on board fencing</span>
-        </div>
+    </div>
+    <div class="photo-item" onclick="openLightbox(1)">
+      <img src="fence2.png" alt="Board on board fencing">
+      <div class="photo-overlay">
+        <span class="photo-caption">Board on Board Fencing</span>
       </div>
-      <div class="photo-item" onclick="openLightbox(1)">
-        <img src="fence2.png" alt="Project description">
-        <div class="photo-overlay">
-          <span class="photo-caption">Board on board fencing</span>
-        </div>
+    </div>
+    <div class="photo-item" onclick="openLightbox(2)">
+      <img src="fence7.png" alt="Board on board fencing">
+      <div class="photo-overlay">
+        <span class="photo-caption">Board on Board Fencing</span>
       </div>
-      <div class="photo-item" onclick="openLightbox(2)">
-        <img src="fence7.png" alt="Project description">
-        <div class="photo-overlay">
-          <span class="photo-caption">Board on board fencing</span>
-        </div>
+    </div>
+    <div class="photo-item" onclick="openLightbox(3)">
+      <img src="fence8.png" alt="Board on board gate">
+      <div class="photo-overlay">
+        <span class="photo-caption">Board on Board Gate</span>
       </div>
-      <div class="photo-item" onclick="openLightbox(3)">
-          <img src="fence8.png" alt="Project description">
-          <div class="photo-overlay">
-            <span class="photo-caption">Board on board gate</span>
-          </div>
+    </div>
+    <div class="photo-item" onclick="openLightbox(4)">
+      <img src="fence1.png" alt="Board on board gate">
+      <div class="photo-overlay">
+        <span class="photo-caption">Board on Board Gate</span>
       </div>
-      <div class="photo-item" onclick="openLightbox(4)">
-          <img src="fence1.png" alt="Project description">
-          <div class="photo-overlay">
-            <span class="photo-caption">Board on board gate</span>
-          </div>
+    </div>
+    <div class="photo-item" onclick="openLightbox(5)">
+      <img src="fence4.png" alt="Board on board gate">
+      <div class="photo-overlay">
+        <span class="photo-caption">Board on Board Gate</span>
       </div>
-      <div class="photo-item" onclick="openLightbox(5)">
-          <img src="fence4.png" alt="Project description">
-          <div class="photo-overlay">
-            <span class="photo-caption">Board on board gate</span>
-          </div>
+    </div>
+    <div class="photo-item" onclick="openLightbox(6)">
+      <img src="fence5.png" alt="Board on board gate">
+      <div class="photo-overlay">
+        <span class="photo-caption">Board on Board Gate</span>
       </div>
-      <div class="photo-item" onclick="openLightbox(6)">
-          <img src="fence5.png" alt="Project description">
-          <div class="photo-overlay">
-            <span class="photo-caption">Board on board gate</span>
-          </div>
-      </div>
-      <div class="photo-item" onclick="openLightbox(7)">
-          <img src="fence6.png" alt="Project description">
-          <div class="photo-overlay">
-            <span class="photo-caption">Board on board gate</span>
-          </div>
-      </div>
-      <div class="photo-placeholder">
-        <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect x="2" y="2" width="12" height="12" fill="var(--gold)"/><rect x="18" y="2" width="12" height="12" fill="var(--rule)"/><rect x="2" y="18" width="12" height="12" fill="var(--rule)"/><rect x="18" y="18" width="12" height="12" fill="var(--gold)"/></svg>
-        Add Photo
+    </div>
+    <div class="photo-item" onclick="openLightbox(7)">
+      <img src="fence6.png" alt="Board on board gate">
+      <div class="photo-overlay">
+        <span class="photo-caption">Board on Board Gate</span>
       </div>
     </div>
   </div>
 </div>
- 
+<div class="photo-grid" id="photoGrid">
+    <div class="photo-item" onclick="openLightbox(8)">
+      <img src="fence9.png" alt="Board on board fencing">
+      <div class="photo-overlay">
+        <span class="photo-caption">Board on Board Fencing</span>
+      </div>
+    </div>
+    <div class="photo-item" onclick="openLightbox(9)">
+      <img src="fence10.png" alt="Board on board fencing">
+      <div class="photo-overlay">
+        <span class="photo-caption">Board on Board Fencing</span>
+      </div>
+    </div>
+    <div class="photo-item" onclick="openLightbox(10)">
+      <img src="fence11.png" alt="Board on board fencing">
+      <div class="photo-overlay">
+        <span class="photo-caption">Board on Board Fencing</span>
+      </div>
+    </div>
+    <div class="photo-item" onclick="openLightbox(11)">
+      <img src="fence12.png" alt="Board on board gate">
+      <div class="photo-overlay">
+        <span class="photo-caption">Board on Board Gate</span>
+      </div>
+    </div>
+    <div class="photo-item" onclick="openLightbox(12)">
+      <img src="fence13.png" alt="Board on board gate">
+      <div class="photo-overlay">
+        <span class="photo-caption">Board on Board Gate</span>
+      </div>
+    </div>
+    <div class="photo-item" onclick="openLightbox(13)">
+      <img src="fence14.png" alt="Board on board gate">
+      <div class="photo-overlay">
+        <span class="photo-caption">Board on Board Gate</span>
+      </div>
+    </div>
+    <div class="photo-item" onclick="openLightbox(14)">
+      <img src="fence15.png" alt="Board on board gate">
+      <div class="photo-overlay">
+        <span class="photo-caption">Board on Board Gate</span>
+      </div>
+    </div>
+    <div class="photo-item" onclick="openLightbox(15)">
+      <img src="fence16.png" alt="Board on board gate">
+      <div class="photo-overlay">
+        <span class="photo-caption">Board on Board Gate</span>
+      </div>
+    </div>
+    <div class="photo-item" onclick="openLightbox(16)">
+      <img src="fence17.png" alt="Board on board gate">
+      <div class="photo-overlay">
+        <span class="photo-caption">Board on Board Gate</span>
+      </div>
+    </div>
+    <div class="photo-item" onclick="openLightbox(17)">
+      <img src="fence18.png" alt="Board on board gate">
+      <div class="photo-overlay">
+        <span class="photo-caption">Board on Board Gate</span>
+      </div>
+    </div>
+    <div class="photo-item" onclick="openLightbox(18)">
+      <img src="fence19.png" alt="Board on board gate">
+      <div class="photo-overlay">
+        <span class="photo-caption">Board on Board Gate</span>
+      </div>
+    </div>
+    <div class="photo-item" onclick="openLightbox(19)">
+      <img src="fence20.png" alt="Board on board gate">
+      <div class="photo-overlay">
+        <span class="photo-caption">Board on Board Gate</span>
+      </div>
+  </div>
+
+</div>
+
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox">
   <div class="lightbox-close" onclick="closeLightbox()">Close ✕</div>
@@ -118,7 +174,7 @@
   </div>
   <div class="lightbox-counter" id="lightboxCounter"></div>
 </div>
- 
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-top">
@@ -140,7 +196,8 @@
         <ul>
           <li><a href="tile-gallery.html">Tile</a></li>
           <li><a href="stone-gallery.html">Stone</a></li>
-          <li><a href="fence-gallery.html" class="active">Fencing</a></li>
+          <li><a href="fence-gallery.html">Fencing</a></li>
+          <li><a href="custom-gallery.html">Custom Work</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -157,15 +214,15 @@
     <span class="footer-bottom-svc">Tile · Stone · Fencing</span>
   </div>
 </footer>
- 
+
 <script>
   const photos = Array.from(document.querySelectorAll('.photo-item img')).map(img => ({
     src: img.src,
     alt: img.alt
   }));
- 
+
   let current = 0;
- 
+
   function openLightbox(index) {
     if (photos.length === 0) return;
     current = index;
@@ -175,28 +232,28 @@
     document.getElementById('lightbox').classList.add('open');
     document.body.style.overflow = 'hidden';
   }
- 
+
   function closeLightbox() {
     document.getElementById('lightbox').classList.remove('open');
     document.body.style.overflow = '';
   }
- 
+
   function prevPhoto() {
     current = (current - 1 + photos.length) % photos.length;
     document.getElementById('lightboxImg').src = photos[current].src;
     document.getElementById('lightboxCounter').textContent = (current + 1) + ' / ' + photos.length;
   }
- 
+
   function nextPhoto() {
     current = (current + 1) % photos.length;
     document.getElementById('lightboxImg').src = photos[current].src;
     document.getElementById('lightboxCounter').textContent = (current + 1) + ' / ' + photos.length;
   }
- 
+
   document.getElementById('lightbox').addEventListener('click', function(e) {
     if (e.target === this) closeLightbox();
   });
- 
+
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') closeLightbox();
     if (e.key === 'ArrowLeft') prevPhoto();
