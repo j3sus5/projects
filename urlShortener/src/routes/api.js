@@ -110,4 +110,16 @@ router.get('/analytics/:code', (req, res) => {
     top_countries: topCountries,
   });
 });
+
+router.get('/links', (req, res) => {
+  const links = db
+    .prepare(
+      `SELECT u.short_code, u.long_url, u.created_at,
+              (SELECT COUNT(*) FROM clicks c WHERE c.short_code = u.short_code) AS clicks
+       FROM urls u ORDER BY u.id DESC LIMIT 100`
+    )
+    .all();
+  res.json({ links });
+});
+
 module.exports = router;
