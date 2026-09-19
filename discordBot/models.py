@@ -50,7 +50,8 @@ class Trade(Base):
     pnl: Mapped[float] = mapped_column(Float)
     tags: Mapped[str | None] = mapped_column(String, nullable=True)
     notes: Mapped[str | None] = mapped_column(String, nullable=True)
-
+    screenshot_url: Mapped[str | None] = mapped_column(String, nullable=True)
+    
     trade_date: Mapped[datetime.date] = mapped_column(Date)
     created_at: Mapped[datetime.datetime] = mapped_column(
         DateTime, default=datetime.datetime.utcnow

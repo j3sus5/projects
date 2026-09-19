@@ -13,11 +13,11 @@ class Trades(commands.Cog):
 
     @app_commands.command(name="account_create", description="Create a new combine/account to track.")
     @app_commands.describe(
-        label="A name for this account, e.g. 'Apex 50k Eval #1'",
+        label="A name for this account, e.g. 'Account 1'",
         firm="Prop firm name, e.g. Apex, TopStep, FTMO",
-        account_size="Starting balance in dollars",
-        daily_loss_limit="Max dollars you're allowed to lose in one day",
-        max_drawdown="Max dollar drawdown allowed",
+        account_size="Starting balance in dollars e.g. 50000",
+        daily_loss_limit="Max dollars you're allowed to lose in one day e.g. 1000",
+        max_loss_limit="Max dollar drawdown allowed",
         drawdown_type="Whether the drawdown trails your equity or is fixed",
         profit_target="Dollar profit needed to pass the evaluation",
     )
@@ -32,7 +32,7 @@ class Trades(commands.Cog):
         firm: str,
         account_size: float,
         daily_loss_limit: float,
-        max_drawdown: float,
+        max_loss_limit: float,
         profit_target: float,
         drawdown_type: app_commands.Choice[str],
     ):
@@ -44,7 +44,7 @@ class Trades(commands.Cog):
                 firm=firm,
                 account_size=account_size,
                 daily_loss_limit=daily_loss_limit,
-                max_drawdown=max_drawdown,
+                max_drawdown=max_loss_limit,
                 drawdown_type=drawdown_type.value,
                 profit_target=profit_target,
                 current_balance=account_size,
@@ -60,7 +60,7 @@ class Trades(commands.Cog):
             embed.add_field(name="Firm", value=firm)
             embed.add_field(name="Size", value=f"${account_size:,.2f}")
             embed.add_field(name="Daily loss limit", value=f"${daily_loss_limit:,.2f}")
-            embed.add_field(name="Max drawdown", value=f"${max_drawdown:,.2f} ({drawdown_type.value})")
+            embed.add_field(name="Max loss limit", value=f"${max_loss_limit:,.2f} ({drawdown_type.value})")
             embed.add_field(name="Profit target", value=f"${profit_target:,.2f}")
             await interaction.response.send_message(embed=embed)
         finally:
@@ -82,42 +82,56 @@ class Trades(commands.Cog):
                 )
                 return
 
-            embed = discord.Embed(title="Your accounts", color=discord.Color.blurple())
+            total_pnl = sum(acc.current_balance - acc.account_size for acc in accounts)
+            color = discord.Color.green() if total_pnl >= 0 else discord.Color.red()
+
+            embed = discord.Embed(
+                title="Your accounts",
+                description=f"Total P&L across all accounts: **${total_pnl:,.2f}**",
+                color=color,
+            )
             for acc in accounts:
-                progress = (acc.current_balance - acc.account_size) / acc.profit_target * 100
+                pnl = acc.current_balance - acc.account_size
+                progress = pnl / acc.profit_target * 100
                 embed.add_field(
                     name=f"{acc.label} ({acc.firm})",
                     value=(
+                        f"P&L: ${pnl:,.2f}\n"
                         f"Balance: ${acc.current_balance:,.2f}\n"
-                        f"Progress to target: {progress:.1f}%\n"
-                        f"Phase: {acc.phase}"
+                        f"{progress:.1f}% to target"
                     ),
-                    inline=False,
+                    inline=True,
                 )
             await interaction.response.send_message(embed=embed)
         finally:
             session.close()
-
     async def account_autocomplete(self, interaction: discord.Interaction, current: str):
-        session = get_session()
         try:
-            accounts = (
-                session.query(Account)
-                .filter_by(discord_user_id=str(interaction.user.id), is_active=True)
-                .all()
-            )
-            return [
-                app_commands.Choice(name=acc.label, value=acc.label)
-                for acc in accounts
-                if current.lower() in acc.label.lower()
-            ][:25]
-        finally:
-            session.close()
+            session = get_session()
+            try:
+                accounts = (
+                    session.query(Account)
+                    .filter_by(discord_user_id=str(interaction.user.id), is_active=True)
+                    .all()
+                )
+                return [
+                    app_commands.Choice(name=acc.label, value=acc.label)
+                    for acc in accounts
+                    if current.lower() in acc.label.lower()
+                ][:25]
+            finally:
+                session.close()
+        except Exception as e:
+            print(f"AUTOCOMPLETE ERROR: {e}")
+            import traceback
+            traceback.print_exc()
+            return []
 
     @app_commands.command(name="trade_log", description="Log a completed trade.")
     @app_commands.describe(
+        screenshot="Optional: a chart screenshot for this trade",
         account="Which account this trade belongs to",
-        symbol="Ticker/contract symbol, e.g. NQ, ES, AAPL",
+        symbol="Symbol, e.g. MNQ, NES",
         side="Long or short",
         pnl="Dollar profit/loss for this trade (negative for a loss)",
         entry_price="Optional: entry price",
@@ -140,6 +154,7 @@ class Trades(commands.Cog):
         pnl: float,
         entry_price: float = None,
         exit_price: float = None,
+        screenshot: discord.Attachment = None,
         size: float = None,
         tags: str = None,
         notes: str = None,
@@ -168,6 +183,7 @@ class Trades(commands.Cog):
                 pnl=pnl,
                 tags=tags,
                 notes=notes,
+                screenshot_url=screenshot.url if screenshot else None,
                 trade_date=datetime.date.today(),
             )
             session.add(trade)
@@ -216,10 +232,93 @@ class Trades(commands.Cog):
             if warnings:
                 embed.add_field(name="Rule status", value="\n".join(warnings), inline=False)
 
+            if screenshot:
+                embed.set_image(url=screenshot.url)
+
             await interaction.response.send_message(embed=embed)
         finally:
             session.close()
 
+    @app_commands.command(name="trade_stats", description="See win rate and stats for an account.")
+    @app_commands.describe(account="Which account to see stats for")
+    @app_commands.autocomplete(account=account_autocomplete)
+    async def trade_stats(self, interaction: discord.Interaction, account: str):
+        session = get_session()
+        try:
+            acc = (
+                session.query(Account)
+                .filter_by(discord_user_id=str(interaction.user.id), label=account, is_active=True)
+                .first()
+            )
+            if not acc:
+                await interaction.response.send_message(
+                    f"Couldn't find an account called '{account}'. Use `/account_list` to check your accounts.",
+                    ephemeral=True,
+                )
+                return
 
+            trades = (
+                session.query(Trade)
+                .filter(Trade.account_id == acc.id)
+                .order_by(Trade.created_at.asc())
+                .all()
+            )
+
+            if not trades:
+                await interaction.response.send_message(
+                    f"No trades logged yet for '{account}'. Use `/trade_log` to add one.",
+                    ephemeral=True,
+                )
+                return
+
+            total_trades = len(trades)
+            wins = [t for t in trades if t.pnl > 0]
+            losses = [t for t in trades if t.pnl < 0]
+            win_rate = len(wins) / total_trades * 100
+
+            gross_win = sum(t.pnl for t in wins)
+            gross_loss = abs(sum(t.pnl for t in losses))
+            profit_factor = gross_win / gross_loss if gross_loss > 0 else float("inf")
+
+            best_trade = max(trades, key=lambda t: t.pnl)
+            worst_trade = min(trades, key=lambda t: t.pnl)
+            total_pnl = sum(t.pnl for t in trades)
+
+            streak_count = 0
+            streak_type = None
+            for t in reversed(trades):
+                current_type = "win" if t.pnl > 0 else "loss" if t.pnl < 0 else "breakeven"
+                if streak_type is None:
+                    streak_type = current_type
+                    streak_count = 1
+                elif current_type == streak_type:
+                    streak_count += 1
+                else:
+                    break
+
+            embed = discord.Embed(
+                title=f"Stats for {acc.label}",
+                color=discord.Color.green() if total_pnl >= 0 else discord.Color.red(),
+            )
+            embed.add_field(name="Total trades", value=str(total_trades), inline=True)
+            embed.add_field(name="Win rate", value=f"{win_rate:.1f}%", inline=True)
+            embed.add_field(
+                name="Profit factor",
+                value="∞" if profit_factor == float("inf") else f"{profit_factor:.2f}",
+                inline=True,
+            )
+            embed.add_field(name="Total P&L", value=f"${total_pnl:,.2f}", inline=True)
+            embed.add_field(name="Best trade", value=f"${best_trade.pnl:,.2f} ({best_trade.symbol})", inline=True)
+            embed.add_field(name="Worst trade", value=f"${worst_trade.pnl:,.2f} ({worst_trade.symbol})", inline=True)
+            embed.add_field(
+                name="Current streak",
+                value=f"{streak_count} {streak_type}{'s' if streak_count != 1 else ''}",
+                inline=True,
+            )
+
+            await interaction.response.send_message(embed=embed)
+        finally:
+            session.close()
 async def setup(bot: commands.Bot):
     await bot.add_cog(Trades(bot))
+
