@@ -5,6 +5,70 @@ from discord.ext import commands
 
 from database import get_session
 from models import Account, Trade
+import io
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+
+
+class BatchTradeModal(discord.ui.Modal, title="Log Multiple Trades"):
+    trades_input = discord.ui.TextInput(
+        label="One trade per line: Account, PnL, Symbol",
+        style=discord.TextStyle.paragraph,
+        placeholder="Test Account, 500, NQ\nTest Account, -150",
+        required=True,
+        max_length=4000,
+    )
+
+    async def on_submit(self, interaction: discord.Interaction):
+        session = get_session()
+        try:
+            lines = [l.strip() for l in self.trades_input.value.split("\n") if l.strip()]
+            results = []
+            for line in lines:
+                parts = [p.strip() for p in line.split(",")]
+                if len(parts) not in (2, 3):
+                    results.append(f"❌ Skipped (need 2 or 3 fields): `{line}`")
+                    continue
+
+                account_label, pnl_str = parts[0], parts[1]
+                symbol = parts[2].upper() if len(parts) == 3 and parts[2] else "N/A"
+
+                try:
+                    pnl = float(pnl_str)
+                except ValueError:
+                    results.append(f"❌ Invalid P&L '{pnl_str}': `{line}`")
+                    continue
+
+                acc = (
+                    session.query(Account)
+                    .filter_by(discord_user_id=str(interaction.user.id), label=account_label, is_active=True)
+                    .first()
+                )
+                if not acc:
+                    results.append(f"❌ No account named '{account_label}': `{line}`")
+                    continue
+
+                trade = Trade(
+                    account_id=acc.id,
+                    symbol=symbol,
+                    side="long",
+                    pnl=pnl,
+                    trade_date=datetime.date.today(),
+                )
+                session.add(trade)
+                acc.current_balance += pnl
+                if acc.current_balance > acc.high_water_mark:
+                    acc.high_water_mark = acc.current_balance
+                results.append(f"✅ {account_label}: ${pnl:,.2f} ({symbol})")
+
+            session.commit()
+
+            embed = discord.Embed(title="Batch trade log results", color=discord.Color.blurple())
+            embed.description = "\n".join(results)
+            await interaction.response.send_message(embed=embed)
+        finally:
+            session.close()
 
 
 class Trades(commands.Cog):
@@ -98,13 +162,15 @@ class Trades(commands.Cog):
                     value=(
                         f"P&L: ${pnl:,.2f}\n"
                         f"Balance: ${acc.current_balance:,.2f}\n"
-                        f"{progress:.1f}% to target"
+                        f"{progress:.1f}% to target\n"
+                        f"Payouts: {acc.payout_count}"
                     ),
                     inline=True,
                 )
             await interaction.response.send_message(embed=embed)
         finally:
             session.close()
+
     async def account_autocomplete(self, interaction: discord.Interaction, current: str):
         try:
             session = get_session()
@@ -127,18 +193,112 @@ class Trades(commands.Cog):
             traceback.print_exc()
             return []
 
+    @app_commands.command(name="account_close", description="Close/archive an account (passed, failed, or manual).")
+    @app_commands.describe(account="Which account to close", reason="Why you're closing it")
+    @app_commands.choices(reason=[
+        app_commands.Choice(name="Passed", value="passed"),
+        app_commands.Choice(name="Failed", value="failed"),
+        app_commands.Choice(name="Manual close", value="manual"),
+    ])
+    @app_commands.autocomplete(account=account_autocomplete)
+    async def account_close(self, interaction: discord.Interaction, account: str, reason: app_commands.Choice[str]):
+        session = get_session()
+        try:
+            acc = (
+                session.query(Account)
+                .filter_by(discord_user_id=str(interaction.user.id), label=account, is_active=True)
+                .first()
+            )
+            if not acc:
+                await interaction.response.send_message(
+                    f"Couldn't find an active account called '{account}'.",
+                    ephemeral=True,
+                )
+                return
+
+            acc.is_active = False
+            acc.closed_reason = reason.value
+            session.commit()
+
+            emoji = {"passed": "🎉", "failed": "💀", "manual": "📁"}[reason.value]
+            await interaction.response.send_message(
+                f"{emoji} **{acc.label}** closed as **{reason.name}**. It won't show in `/account_list` or `/trade_log` anymore, but its history is preserved."
+            )
+        finally:
+            session.close()
+
+    @app_commands.command(name="account_payout", description="Log a payout received from a funded account.")
+    @app_commands.describe(
+        account="Which account received a payout",
+        amount="Dollar amount of the payout (will be removed from the account's balance)",
+    )
+    @app_commands.autocomplete(account=account_autocomplete)
+    async def account_payout(self, interaction: discord.Interaction, account: str, amount: float):
+        session = get_session()
+        try:
+            acc = (
+                session.query(Account)
+                .filter_by(discord_user_id=str(interaction.user.id), label=account, is_active=True)
+                .first()
+            )
+            if not acc:
+                await interaction.response.send_message(
+                    f"Couldn't find an active account called '{account}'.",
+                    ephemeral=True,
+                )
+                return
+
+            acc.payout_count += 1
+            acc.current_balance -= amount
+            session.commit()
+
+            embed = discord.Embed(
+                title=f"💰 Payout logged: {acc.label}",
+                color=discord.Color.gold(),
+            )
+            embed.add_field(name="Payout amount", value=f"${amount:,.2f}")
+            embed.add_field(name="New balance", value=f"${acc.current_balance:,.2f}")
+            embed.add_field(name="Total payouts", value=str(acc.payout_count))
+            await interaction.response.send_message(embed=embed)
+        finally:
+            session.close()
+
+    async def account_stats_autocomplete(self, interaction: discord.Interaction, current: str):
+        try:
+            session = get_session()
+            try:
+                accounts = (
+                    session.query(Account)
+                    .filter_by(discord_user_id=str(interaction.user.id), is_active=True)
+                    .all()
+                )
+                choices = [
+                    app_commands.Choice(name="all", value="__all__"),
+                    app_commands.Choice(name="all (including closed accounts)", value="__all_history__"),
+                ]
+                choices += [
+                    app_commands.Choice(name=acc.label, value=acc.label)
+                    for acc in accounts
+                    if current.lower() in acc.label.lower()
+                ]
+                return choices[:25]
+            finally:
+                session.close()
+        except Exception as e:
+            print(f"AUTOCOMPLETE ERROR: {e}")
+            import traceback
+            traceback.print_exc()
+            return []
+
     @app_commands.command(name="trade_log", description="Log a completed trade.")
     @app_commands.describe(
-        screenshot="Optional: a chart screenshot for this trade",
         account="Which account this trade belongs to",
-        symbol="Symbol, e.g. MNQ, NES",
         side="Long or short",
         pnl="Dollar profit/loss for this trade (negative for a loss)",
-        entry_price="Optional: entry price",
-        exit_price="Optional: exit price",
+        journal="Your notes on why you took this trade, how it felt, lessons learned",
+        screenshot="Optional: a chart screenshot for this trade",
+        symbol="Optional: ticker/contract symbol, e.g. NQ, ES, AAPL",
         size="Optional: contracts/shares traded",
-        tags="Optional: comma-separated tags, e.g. breakout,scalp",
-        notes="Optional: any notes about the trade",
     )
     @app_commands.choices(side=[
         app_commands.Choice(name="Long", value="long"),
@@ -149,15 +309,12 @@ class Trades(commands.Cog):
         self,
         interaction: discord.Interaction,
         account: str,
-        symbol: str,
         side: app_commands.Choice[str],
         pnl: float,
-        entry_price: float = None,
-        exit_price: float = None,
+        journal: str,
         screenshot: discord.Attachment = None,
+        symbol: str = None,
         size: float = None,
-        tags: str = None,
-        notes: str = None,
     ):
         session = get_session()
         try:
@@ -175,14 +332,11 @@ class Trades(commands.Cog):
 
             trade = Trade(
                 account_id=acc.id,
-                symbol=symbol.upper(),
+                symbol=symbol.upper() if symbol else "N/A",
                 side=side.value,
-                entry_price=entry_price,
-                exit_price=exit_price,
                 size=size,
                 pnl=pnl,
-                tags=tags,
-                notes=notes,
+                notes=journal,
                 screenshot_url=screenshot.url if screenshot else None,
                 trade_date=datetime.date.today(),
             )
@@ -223,12 +377,15 @@ class Trades(commands.Cog):
                 warnings.append(f"🎉 **Profit target reached!** You're at ${acc.current_balance:,.2f}.")
 
             color = discord.Color.red() if pnl < 0 else discord.Color.green()
+            title_symbol = f"{symbol.upper()} " if symbol else ""
             embed = discord.Embed(
-                title=f"Trade logged: {symbol.upper()} ({side.value})",
+                title=f"Trade logged: {title_symbol}({side.value})",
                 color=color,
             )
             embed.add_field(name="P&L", value=f"${pnl:,.2f}")
             embed.add_field(name="New balance", value=f"${acc.current_balance:,.2f}")
+            if journal:
+                embed.add_field(name="Journal", value=journal, inline=False)
             if warnings:
                 embed.add_field(name="Rule status", value="\n".join(warnings), inline=False)
 
@@ -239,34 +396,66 @@ class Trades(commands.Cog):
         finally:
             session.close()
 
+    @app_commands.command(name="trade_log_batch", description="Log multiple trades across one or more accounts at once.")
+    async def trade_log_batch(self, interaction: discord.Interaction):
+        await interaction.response.send_modal(BatchTradeModal())
+
     @app_commands.command(name="trade_stats", description="See win rate and stats for an account.")
-    @app_commands.describe(account="Which account to see stats for")
-    @app_commands.autocomplete(account=account_autocomplete)
+    @app_commands.describe(account="Which account to see stats for, or 'All accounts'")
+    @app_commands.autocomplete(account=account_stats_autocomplete)
     async def trade_stats(self, interaction: discord.Interaction, account: str):
         session = get_session()
         try:
-            acc = (
-                session.query(Account)
-                .filter_by(discord_user_id=str(interaction.user.id), label=account, is_active=True)
-                .first()
-            )
-            if not acc:
-                await interaction.response.send_message(
-                    f"Couldn't find an account called '{account}'. Use `/account_list` to check your accounts.",
-                    ephemeral=True,
+            if account in ("__all__", "__all_history__"):
+                if account == "__all_history__":
+                    accounts = (
+                        session.query(Account)
+                        .filter_by(discord_user_id=str(interaction.user.id))
+                        .all()
+                    )
+                else:
+                    accounts = (
+                        session.query(Account)
+                        .filter_by(discord_user_id=str(interaction.user.id), is_active=True)
+                        .all()
+                    )
+                if not accounts:
+                    await interaction.response.send_message(
+                        "You don't have any accounts yet. Create one with `/account_create`.",
+                        ephemeral=True,
+                    )
+                    return
+                account_ids = [acc.id for acc in accounts]
+                trades = (
+                    session.query(Trade)
+                    .filter(Trade.account_id.in_(account_ids))
+                    .order_by(Trade.created_at.asc())
+                    .all()
                 )
-                return
-
-            trades = (
-                session.query(Trade)
-                .filter(Trade.account_id == acc.id)
-                .order_by(Trade.created_at.asc())
-                .all()
-            )
+                title_label = "All accounts (history)" if account == "__all_history__" else "All accounts"
+            else:
+                acc = (
+                    session.query(Account)
+                    .filter_by(discord_user_id=str(interaction.user.id), label=account, is_active=True)
+                    .first()
+                )
+                if not acc:
+                    await interaction.response.send_message(
+                        f"Couldn't find an account called '{account}'. Use `/account_list` to check your accounts.",
+                        ephemeral=True,
+                    )
+                    return
+                trades = (
+                    session.query(Trade)
+                    .filter(Trade.account_id == acc.id)
+                    .order_by(Trade.created_at.asc())
+                    .all()
+                )
+                title_label = acc.label
 
             if not trades:
                 await interaction.response.send_message(
-                    f"No trades logged yet for '{account}'. Use `/trade_log` to add one.",
+                    f"No trades logged yet for '{title_label}'. Use `/trade_log` to add one.",
                     ephemeral=True,
                 )
                 return
@@ -297,7 +486,7 @@ class Trades(commands.Cog):
                     break
 
             embed = discord.Embed(
-                title=f"Stats for {acc.label}",
+                title=f"Stats for {title_label}",
                 color=discord.Color.green() if total_pnl >= 0 else discord.Color.red(),
             )
             embed.add_field(name="Total trades", value=str(total_trades), inline=True)
@@ -319,6 +508,135 @@ class Trades(commands.Cog):
             await interaction.response.send_message(embed=embed)
         finally:
             session.close()
+
+    @app_commands.command(name="trade_chart", description="See an equity curve chart for an account.")
+    @app_commands.describe(account="Which account to chart, or 'all'")
+    @app_commands.autocomplete(account=account_stats_autocomplete)
+    async def trade_chart(self, interaction: discord.Interaction, account: str):
+        session = get_session()
+        try:
+            if account in ("__all__", "__all_history__"):
+                if account == "__all_history__":
+                    accounts = (
+                        session.query(Account)
+                        .filter_by(discord_user_id=str(interaction.user.id))
+                        .all()
+                    )
+                else:
+                    accounts = (
+                        session.query(Account)
+                        .filter_by(discord_user_id=str(interaction.user.id), is_active=True)
+                        .all()
+                    )
+                if not accounts:
+                    await interaction.response.send_message(
+                        "You don't have any accounts yet. Create one with `/account_create`.",
+                        ephemeral=True,
+                    )
+                    return
+                account_ids = [acc.id for acc in accounts]
+                trades = (
+                    session.query(Trade)
+                    .filter(Trade.account_id.in_(account_ids))
+                    .order_by(Trade.created_at.asc())
+                    .all()
+                )
+                title_label = "All accounts (history)" if account == "__all_history__" else "All accounts"
+            else:
+                acc = (
+                    session.query(Account)
+                    .filter_by(discord_user_id=str(interaction.user.id), label=account, is_active=True)
+                    .first()
+                )
+                if not acc:
+                    await interaction.response.send_message(
+                        f"Couldn't find an account called '{account}'. Use `/account_list` to check your accounts.",
+                        ephemeral=True,
+                    )
+                    return
+                trades = (
+                    session.query(Trade)
+                    .filter(Trade.account_id == acc.id)
+                    .order_by(Trade.created_at.asc())
+                    .all()
+                )
+                title_label = acc.label
+
+            if not trades:
+                await interaction.response.send_message(
+                    f"No trades logged yet for '{title_label}'. Use `/trade_log` to add one.",
+                    ephemeral=True,
+                )
+                return
+
+            cumulative = 0
+            points = [0]
+            for t in trades:
+                cumulative += t.pnl
+                points.append(cumulative)
+
+            bg = "#000000"
+            line_color = "#00ff9c" if points[-1] >= 0 else "#ff3b5c"
+            xs = list(range(len(points)))
+
+            fig, ax = plt.subplots(figsize=(8, 4.5), dpi=150, facecolor=bg)
+            ax.set_facecolor(bg)
+
+            # neon glow: stacked wide, faint lines under the main line
+            for width, alpha in [(12, 0.04), (8, 0.06), (5, 0.10)]:
+                ax.plot(xs, points, color=line_color, linewidth=width, alpha=alpha, solid_capstyle="round")
+            ax.plot(xs, points, color=line_color, linewidth=2.2, solid_capstyle="round", zorder=3)
+
+            ax.fill_between(xs, points, 0, where=[p >= 0 for p in points], color="#00ff9c", alpha=0.12, interpolate=True)
+            ax.fill_between(xs, points, 0, where=[p < 0 for p in points], color="#ff3b5c", alpha=0.12, interpolate=True)
+            ax.axhline(0, color="#555555", linewidth=0.8, linestyle="--")
+
+            # glowing marker + label on the latest point
+            ax.scatter([xs[-1]], [points[-1]], s=160, color=line_color, alpha=0.25, zorder=4)
+            ax.scatter([xs[-1]], [points[-1]], s=40, color=line_color, edgecolors="white", linewidths=1, zorder=5)
+            ax.annotate(
+                f"${points[-1]:,.0f}",
+                (xs[-1], points[-1]),
+                textcoords="offset points",
+                xytext=(0, 12) if points[-1] >= points[-2] else (0, -20),
+                ha="center",
+                color="white",
+                fontsize=10,
+                fontweight="bold",
+            )
+
+            ax.set_title(f"EQUITY CURVE  ·  {title_label}", fontsize=14, fontweight="bold", color="white", pad=14)
+            ax.set_xlabel("Trade #", color="#aaaaaa")
+            ax.set_ylabel("Cumulative P&L", color="#aaaaaa")
+            ax.yaxis.set_major_formatter(lambda v, _: f"${v:,.0f}")
+            ax.tick_params(colors="#aaaaaa")
+            ax.grid(True, color="#ffffff", alpha=0.07)
+            for side in ("top", "right"):
+                ax.spines[side].set_visible(False)
+            for side in ("left", "bottom"):
+                ax.spines[side].set_color("#333333")
+            ax.margins(x=0.05, y=0.15)
+            fig.tight_layout()
+
+            buf = io.BytesIO()
+            fig.savefig(buf, format="png", facecolor=bg)
+            plt.close(fig)
+            buf.seek(0)
+
+            file = discord.File(buf, filename="equity_curve.png")
+
+            embed = discord.Embed(
+                title=f"Equity curve: {title_label}",
+                description=f"Total P&L: **${cumulative:,.2f}** over {len(trades)} trades",
+                color=discord.Color.green() if cumulative >= 0 else discord.Color.red(),
+            )
+            embed.set_image(url="attachment://equity_curve.png")
+
+            await interaction.response.send_message(embed=embed, file=file)
+        finally:
+            session.close()
+
+
 async def setup(bot: commands.Bot):
     await bot.add_cog(Trades(bot))
 

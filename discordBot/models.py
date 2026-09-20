@@ -16,6 +16,7 @@ class Account(Base):
     label: Mapped[str] = mapped_column(String)
     firm: Mapped[str] = mapped_column(String)
     phase: Mapped[str] = mapped_column(String, default="evaluation")
+    payout_count: Mapped[int] = mapped_column(Integer, default=0)
 
     account_size: Mapped[float] = mapped_column(Float)
     daily_loss_limit: Mapped[float] = mapped_column(Float)
@@ -27,6 +28,7 @@ class Account(Base):
     high_water_mark: Mapped[float] = mapped_column(Float)
 
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
+    closed_reason: Mapped[str | None] = mapped_column(String, nullable=True)
     created_at: Mapped[datetime.datetime] = mapped_column(
         DateTime, default=datetime.datetime.utcnow
     )
