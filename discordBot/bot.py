@@ -13,17 +13,22 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 @bot.event
 async def on_ready():
     print(f"Logged in as {bot.user} (id: {bot.user.id})")
+    print(f"TEST_GUILD_ID is: {TEST_GUILD_ID}")
 
-    if TEST_GUILD_ID:
-        guild = discord.Object(id=TEST_GUILD_ID)
-        bot.tree.copy_global_to(guild=guild)
-        synced = await bot.tree.sync(guild=guild)
-    else:
-        synced = await bot.tree.sync()
+    try:
+        if TEST_GUILD_ID:
+            guild = discord.Object(id=TEST_GUILD_ID)
+            bot.tree.copy_global_to(guild=guild)
+            synced = await bot.tree.sync(guild=guild)
+        else:
+            synced = await bot.tree.sync()
+        print(f"Synced {len(synced)} slash command(s): {[c.name for c in synced]}")
+    except Exception as e:
+        print(f"SYNC ERROR: {e}")
+        import traceback
+        traceback.print_exc()
 
-    print(f"Synced {len(synced)} slash command(s).")
     print("------")
-
 
 async def load_cogs():
     await bot.load_extension("cogs.trades")

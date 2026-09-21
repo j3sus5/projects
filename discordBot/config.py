@@ -9,7 +9,7 @@ if not DISCORD_BOT_TOKEN:
         "DISCORD_BOT_TOKEN is not set. Copy .env.example to .env and add your bot token."
     )
 
-DATABASE_PATH = os.getenv("DATABASE_PATH", "bot.db")
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///bot.db")
 
 _test_guild = os.getenv("TEST_GUILD_ID")
 TEST_GUILD_ID = int(_test_guild) if _test_guild else None
